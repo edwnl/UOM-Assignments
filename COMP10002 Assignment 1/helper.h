@@ -35,15 +35,18 @@ size_t getLastIndex(char *str) { return strlen(str) - 1; }
 
 char getLast(char *str) { return str[getLastIndex(str)]; }
 
-void removeLastChar(char *str) { strcpy(&str[getLastIndex(str)], "\0"); }
+void removeChar(char *str, int i) { strcpy(&str[i], "\0"); }
 
 void clear(void *arr_ptr, size_t size) { memset(arr_ptr, 0, size); }
 
 int isPunctuated(char c) { return strchr(TERM_PUNCT, c) != NULL; }
 
-int isWordPunctuated(char *c) {
-    for (size_t i = getLastIndex(c); i != 0; i--)
-        if (strchr(TERM_PUNCT, c[i]) != NULL) return 1;
+/*
+ * Returns the index of the punctuation, or 0 if not found.
+ */
+int getPunctIndex(char *c) {
+    for (size_t i = getLastIndex(c); i > 0; i--)
+        if (strchr(TERM_PUNCT, c[i]) != NULL) return i;
     return 0;
 }
 
@@ -66,7 +69,7 @@ char *getLower(const char *str) {
     return dup;
 }
 
-int getKeywordIndex(char *str, int argc, char *argv[]) {
+int isQuery(char *str, int argc, char *argv[]) {
     for (int j = 0; j < argc; ++j)
         if (strstr(getLower(str), getLower(argv[j]))) return j;
     return -1;

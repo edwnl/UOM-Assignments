@@ -32,7 +32,7 @@ double getScore(StringList words, int start, int end, int argc, char *argv[]) {
 
     for (int i = start; i < end; ++i) {
         printf("%s", words[i]); // TODO: Store original words
-        int key_index = getKeywordIndex(words[i], argc, argv);
+        int key_index = isQuery(words[i], argc, argv);
 
         // If the word is a search term
         if(key_index != -1) {
@@ -50,10 +50,10 @@ double getScore(StringList words, int start, int end, int argc, char *argv[]) {
     }
 
     // ---- 4. Add 0.6 points if the word before is punctuated. (First word = punctuated) ----
-    if(start == 0 || isWordPunctuated(words[start - 1])) rule4 += 0.6;
+    if(start == 0 || getPunctIndex(words[start - 1])) rule4 += 0.6;
 
     // ---- 5. Add 0.3 points if the ending word is punctuated. ----
-    if(isWordPunctuated(words[end-1])) rule5 += 0.3;
+    if(getPunctIndex(words[end - 1])) rule5 += 0.3;
 
     // ---- 6. Subtract 0.1 point for each word over MIN_SNIPPET_LEN ----
     rule6 += max((end - start) - MIN_SNIPPET_LEN, 0) * -0.1;
@@ -63,16 +63,47 @@ double getScore(StringList words, int start, int end, int argc, char *argv[]) {
     return rule1 + rule2 + rule3 + rule4 + rule5 + rule6;
 }
 
+char * formatParagraph(const StringList words, int start, int finish, int argc, char *argv[], int *matches) {
+    size_t char_count = 0, len;
+    int punct_i, bold, wrap;
+    StringList *output;
+    *matches = 0;
+
+    for (int i = start; i < finish; ++i) {
+        String *word = strdup(words[i]), suffix, word_out;
+        bold = isQuery(*word, argc, argv) != -1;
+        len = strlen(*word) + (i != 0 ? 1 : 0) + (bold ? 4 : 0);
+        wrap = char_count + len > MAX_OUTPUT_LINE;
+        char_count = wrap ? len - 1 : char_count + len;
+
+        // Check for bolding words with punctuation
+        if (bold && (*matches++) && (strcat(suffix, BOLD))) {
+            if(punct_i = getPunctIndex(word), punct_i != 0) {
+                removeChar(*word, punct_i); // Remove punct char
+                strcat(suffix, &word[i][punct_i]); // Add punct to suffix
+            }
+        }
+
+        snprintf(word_out, sizeof word_out, "%s%s%s%s%s",
+                 (i != 0 ? (wrap ? "\n" : " ") : ""), (bold ? BOLD : ""), *word,
+                 suffix,
+                 (i == finish - 1 ? "\n\n" : ""));
+
+        strcpy(*output[i], word_out);
+
+//        printf("String: %s Length: %d Wrap: %d Chars: %d\n",
+//               word_out, len, wrap, char_count);
+    }
+    return output;
+}
+
 int main(int argc, char *argv[]) {
     String word;
-    StringList words, stage2, stage3;
+    StringList words, *stage2, stage3;
 
     int status = 0, word_count = 0, para_count = 0, matches;
-    char bold_suffix[4], word_out[50];
-    size_t char_count = 0;
 
     while (status != EOF) {
-        matches = 0;
         clear(stage2, MAX_PARA_LEN);
 
         // Get all words in paragraph
@@ -83,54 +114,20 @@ int main(int argc, char *argv[]) {
 
         printf("======= Stage 1 [para %d; %d words]\n", ++para_count, word_count);
 
-        for (int i = 0; i < word_count; ++i) {
-            int first = i == 0, last = i == word_count - 1, bold, wrap;
-            String *str = &words[i];
-            clear(bold_suffix, 4);
-            clear(word_out, 50);
+        stage2 = (StringList *) formatParagraph(words, 0, word_count, argc, argv, &matches);
 
-            bold = getKeywordIndex(*str, argc, argv) != -1;
-            size_t len = strlen(*str) + (!first ? 1 : 0) + (bold ? 4 : 0);
-            wrap = char_count + len > MAX_OUTPUT_LINE;
+        printf("\n======= Stage 2 [para %d; %d words; %d matches]\n", para_count, word_count, matches);
 
-            // Check for bolding words with punctuation
-            if (bold) {
-                char last_char = getLast(words[i]);
-                strcat(bold_suffix, BOLD);
+        for (int i = 0; i < word_count; ++i) printf("%s", *stage2[i]);
 
-                matches++;
-
-                if (isPunctuated(last_char)) {
-                    removeLastChar(*str); // Remove last char
-                    strcat(bold_suffix, &last_char); // Add to bold_suffix
-                }
-            }
-
-            char_count = wrap ? len - 1 : char_count + len;
-
-            snprintf(word_out, sizeof word_out, "%s%s%s%s%s",
-                     (!first ? (wrap ? "\n" : " ") : ""), (bold ? BOLD : ""), *str,
-                     bold_suffix,
-                     (last ? "\n\n" : ""));
-
-            strcpy(words[i], word_out);
-//            printf("String: %s Length: %d Wrap: %d Chars: %d\n",
-//                   word_out, len, wrap, char_count);
-        }
-
-        printf("\n======= Stage 2 [para %d; %d words; %d matches]\n", para_count,
-               word_count, matches);
-
-        for (int i = 0; i < word_count; ++i) printf("%s", words[i]);
-
-        printf("%s", *stage2);
-
-        printf("======= Stage 3 [para %d; %d words]\n", para_count, word_count);
-
-        printf("Score: %lf\n\n", getScore(words, 0, MIN_SNIPPET_LEN + 1, argc, argv));
-
+//        printf("%s", *stage2);
+//
+//        printf("======= Stage 3 [para %d; %d words]\n", para_count, word_count);
+//
+//        printf("Score: %lf\n\n", getScore(words, 0, MIN_SNIPPET_LEN + 1, argc, argv));
+//
         status = (status == EOF ? EOF : 0);
-        word_count = 0, char_count = 0;
+        word_count = 0;
     }
 
     return 0;
