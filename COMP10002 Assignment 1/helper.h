@@ -30,6 +30,7 @@ typedef String StringList[MAX_PARA_LEN];  // char[10000][24]
 // Helper functions
 
 int max(int n1, int n2) { return n1 > n2 ? n1 : n2; }
+int min(int n1, int n2) { return n1 < n2 ? n1 : n2; }
 
 size_t getLastIndex(char *str) { return strlen(str) - 1; }
 
@@ -69,16 +70,15 @@ char *getLower(const char *str) {
     return dup;
 }
 
-int isQuery(char *str, int argc, char *argv[]) {
-    for (int j = 0; j < argc; ++j)
+int isQuery(char *str, char *argv[]) {
+    for (int j = 0; argv[j]; ++j)
         if (strstr(getLower(str), getLower(argv[j]))) return j;
     return -1;
 }
 
 int get_word(char *word, const int limit) {
     int chr = 0, len = 0;
-    while (chr != EOF && !isalnum(chr = getchar()))
-        ;
+    while (chr != EOF && !isalnum(chr = getchar()));
     if (chr == EOF) return EOF;
 
     while (limit > len && (word[len++] = chr) && (chr = getchar())) {
