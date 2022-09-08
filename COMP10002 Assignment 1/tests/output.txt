@@ -1,3 +1,4 @@
+"C:\Users\edwin\Desktop\Coding\Github\UOM-Assignments\COMP10002 Assignment 1\cmake-build-debug\Assignment_1.exe" alice feet
 
 ======= Stage 1 [para 1; 57 words]
 
@@ -66,3 +67,5 @@ The rabbit hole went straight on like a tunnel for some way, and then
 dipped suddenly down, so suddenly that **Alice**...
 
 ta daa!
+
+Process finished with exit code 0
