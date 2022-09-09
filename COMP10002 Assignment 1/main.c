@@ -1,96 +1,108 @@
+/* Program to generate term-biased snippets for paragraphs of text.
+
+   Skeleton program written by Alistair Moffat, ammoffat@unimelb.edu.au,
+   August 2022, with the intention that it be modified by students
+   to add functionality, as required by the assignment specification.
+
+   Student Authorship Declaration:
+
+   (1) I certify that except for the code provided in the initial skeleton
+   file, the  program contained in this submission is completely my own
+   individual work, except where explicitly noted by further comments that
+   provide details otherwise.  I understand that work that has been developed
+   by another student, or by me in collaboration with other students, or by
+   non-students as a result of request, solicitation, or payment, may not be
+   submitted for assessment in this subject.  I understand that submitting for
+   assessment work developed by or in collaboration with other students or
+   non-students constitutes Academic Misconduct, and may be penalized by mark
+   deductions, or by other penalties determined via the University of
+   Melbourne Academic Honesty Policy, as described at
+   https://academicintegrity.unimelb.edu.au.
+
+   (2) I also certify that I have not provided a copy of this work in either
+   softcopy or hardcopy or any other form to any other student, and nor will I
+   do so until after the marks are released. I understand that providing my
+   work to other students, regardless of my intention or any undertakings made
+   to me by that other student, is also Academic Misconduct.
+
+   (3) I further understand that providing a copy of the assignment
+   specification to any form of code authoring or assignment tutoring service,
+   or drawing the attention of others to such services and code that may have
+   been made available via such a service, may be regarded as Student General
+   Misconduct (interfering with the teaching activities of the University
+   and/or inciting others to commit Academic Misconduct).  I understand that
+   an allegation of Student General Misconduct may arise regardless of whether
+   or not I personally make use of such solutions or sought benefit from such
+   actions.
+
+   Signed by: [Enter your full name and student number here before submission]
+   Dated:     [Enter the date that you "signed" the declaration]
+
+*/
+
 #include <stdio.h>
 #include <string.h>
-
 #include "helper.h"
 
-// Constant Values
-#define MAX_WORD_LEN 23
-#define MAX_PARA_LEN 10000
-
-#define PARA_END 1
-#define WORD_FND 2
-
-#define TERM_PUNCT ".,;:!?"
-#define NEEDS_DOTS ",;:"
-#define PARA_SEPARATOR "\n\n"
-#define BBOLD "**"
-#define DDOTS "..."
-#define TERM_CHARS "\n "
-#define BYPASS_PUNCT "-'"
-
-#define MAX_SNIPPET_LEN 30
-#define MIN_SNIPPET_LEN 20
-#define MAX_OUTPUT_LINE 72
-
-#define MAX_TERMS 50
-#define NO_MATCH (-1)
-
-/*
- * Start - Inclusive
- * End - Exclusive
- */
 double getScore(const Strings words, int start, int end, const char *argv[]) {
+    double score = 15.0 / (start + 10.0); // + (15 / start + 10) points.
     int key_indexes[MAX_TERMS], last_key_index = 0, key_index;
-    double rule1 = 0, rule2 = 0, rule3 = 0, rule4 = 0, rule5 = 0, rule6 = 0;
     clear(key_indexes, MAX_TERMS);
 
-    // ---- 1. Add 15 / (start + 10) points. First word = 0; ----
-    rule1 += 15.0 / (start + 10.0);
-
     for (int i = start; i < end; i++) {
-        if ((key_index = isQuery(words[i], argv)) == -1) continue;
+        // Check if the word is a query term.
+        if ((key_index = isQuery(words[i], argv)) == NO_MATCH) continue;
 
-        // ---- 3. Add 1.0 points for every other repeated query term ----
-        for (int j = 0; argv[j]; j++) {
-            if (key_indexes[j] == key_index) {
-                rule3++;
+        // Handles UNIQUE / DUPLICATE query terms.
+        for (int j = 0; j < MAX_TERMS; j++) {
+            // + (query length / 2) points for every UNIQUE query term.
+            if (!key_indexes[j]) {
+                score += (double) alNumLen(words[i]) / 2;
+                key_indexes[last_key_index++] = key_index;
                 break;
             }
-        }
-
-        // ---- 2. Add alpha_len(query) / 2 points for each unique query term ----
-        if (rule3 == 0) {
-            rule2 += (double)alpha_len(words[i]) / 2;
-            key_indexes[last_key_index++] = key_index;
+            // + 1.0 points for every REPEATED query term.
+            if (key_indexes[j] == key_index && (score++)) break;
         }
     }
 
-    // ---- 4. Add 0.6 points if the word before is punctuated. ----
-    if (start == 0 || getPunctIndex(words[start - 1])) rule4 += 0.6;
+    // + 0.6 points if the word before is punctuated.
+    if (start == 0 || getPunctIndex(words[start - 1])) score += 0.6;
+    // + 0.3 points if the ending word is punctuated.
+    if (getPunctIndex(words[end - 1])) score += 0.3;
+    // - 0.1 point for each word over MIN_SNIPPET_LEN
+    score += max((end - start) - MIN_SNIPPET_LEN, 0) * -0.1;
 
-    // ---- 5. Add 0.3 points if the ending word is punctuated. ----
-    if (getPunctIndex(words[end - 1])) rule5 += 0.3;
-
-    // ---- 6. Subtract 0.1 point for each word over MIN_SNIPPET_LEN ----
-    rule6 += max((end - start) - MIN_SNIPPET_LEN, 0) * -0.1;
-
-    double score = rule1 + rule2 + rule3 + rule4 + rule5 + rule6;
-
-    //    printf("[1]: %.1lf, [2]: %.1lf, [3]: %.1lf, [4]: %.1lf, [5]: %.1lf, [6]:
-    //    %.1lf, [SCORE]: %.1lf\n", rule1, rule2, rule3, rule4, rule5, rule6,
-    //    score);
     return score;
 }
 
-void getLowestScore(const Strings words, int len, const char *argv[],
-                    int *begin, int *finish, double *score) {
-    double tmp_score;
-    *score = 0;
+/**
+ * Finds the highest scoring snippet within a paragraph.
+ * Loops all possible combos of [start, end], where (end-start)
+ * is between MIN and MAX_SNIPPET_LEN.
+ *
+ * (start == 0) and (end == para_len) handles the case
+ * where para_len <= MIN_SNIPPET_LEN.
+ * @param words
+ * @param para_len
+ * @param argv
+ * @param start_out
+ * @param end_out
+ * @param score
+ */
+void getLowestScore(const Strings words, int para_len, const char *argv[], int *start_out, int *end_out, double *score) {
+    int start = 0, end; // Start and End index;
+    double cur_score; // Used to temporarily store a score.
 
-    if (len <= MIN_SNIPPET_LEN + 1) {
-        *begin = 0;
-        *finish = len;
-        *score = getScore(words, 0, len, argv);
-        return;
-    }
+    for (; start == 0 || start <= para_len - MIN_SNIPPET_LEN; start++) {
+        end = min(para_len, start + MIN_SNIPPET_LEN);
 
-    for (int start = 0; start < len - MAX_SNIPPET_LEN; start++) {
-        for (int end = min(len, start + MIN_SNIPPET_LEN);
-             end - start <= MAX_SNIPPET_LEN; end++) {
-            if ((tmp_score = getScore(words, start, end, argv)) > *score) {
-                *score = tmp_score;
-                *begin = start;
-                *finish = end;
+        for (; end == para_len || end - start <= MAX_SNIPPET_LEN; end++) {
+            cur_score = getScore(words, start, end, argv);
+            if (cur_score > *score) {
+                *score = cur_score;
+                *start_out = start;
+                *end_out = end;
             }
         }
     }
@@ -112,35 +124,41 @@ void printPara(const Strings f_wrds, int start, int finish, int stg_3) {
 
 void formatPara(const Strings words, Strings output, const char *argv[], int *matches) {
     int punct, bold;
+    String word, suffix, result;
 
     for (int i = 0; words[i][0]; i++) {
-        String *word = strdup(words[i]), suffix = "", result = "";
-        bold = isQuery(*word, argv) != -1;
+        strcpy(word, strdup(words[i]));
+
+        bold = isQuery(&word, argv) != NO_MATCH;
 
         if (bold && (*matches += 1)) {  // Handles bolding words with punctuation
             strcat(suffix, BBOLD);
-            if (punct = getPunctIndex(*word), punct != 0) {
-                removeChar(*word, punct);          // Remove punctuation char
+            if (punct = getPunctIndex(&word), punct != 0) {
+                strcpy(&word[punct], "\0"); // Remove punctuation char
                 strcat(suffix, &words[i][punct]);  // Add punctuation to suffix
             }
         }
 
-        snprintf(result, sizeof result, "%s%s%s", (bold ? BBOLD : ""), *word, suffix);
+        snprintf(result, sizeof result, "%s%s%s", (bold ? BBOLD : ""), &word, suffix);
         strcpy(output[i], result);
+
+        strcpy(suffix, "");
+        strcpy(result, "");
     }
 }
 
 int main(int argc, const char *argv[]) {
-    String word;
     Strings words, formatted_words;
-    int status = 0, word_count = 0, para_count = 0, matches, start, end;
-    double score;
+    int status, word_count = 0, para_count = 0, matches, start, end;
+    double score = 0;
 
-    while (status != EOF) {
-        while (status != PARA_END && status != EOF) {
-            status = get_word(word, MAX_WORD_LEN);
-            strcpy(words[word_count++], word);
+    while (TRUE) {
+        while (TRUE) {
+            status = get_word(words, &word_count);
+            if(status != WORD_FND) break;
+            else word_count++;
         }
+
         formatPara(words, formatted_words, argv, &matches);
         getLowestScore(words, word_count, argv, &start, &end, &score);
 
@@ -154,7 +172,9 @@ int main(int argc, const char *argv[]) {
                para_count, start, end - start, score);
         printPara(formatted_words, start, end, 1);
 
-        status = (status == EOF ? EOF : 0), score = 0, matches = 0, word_count = 0;
+        if(status == EOF) break;
+
+        score = 0, matches = 0, word_count = 0;
         clear(words, MAX_PARA_LEN);
         clear(formatted_words, MAX_PARA_LEN);
     }
