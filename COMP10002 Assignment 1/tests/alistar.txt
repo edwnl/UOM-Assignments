@@ -1,0 +1,306 @@
+Hello everyone, welcome to comp10002 for 2022s2. Its going to be an exciting semester (like it always is), and there will be lots for you to learn and absorb. This initial announcement is to let you know that the LMS site has been opened, and will be steadilyy growing over the next few weeks (and months)
+
+Plus, answers to a few questions that always arise at the beginning of the semester:
+
+All lectures will be provided via pre-recorded videos, at a rate of approximately three-hours per week. They will be made available via the Echo360 interface prior to the start of each week. The first lecture videos will be published prior to the Monday of Week 1 of semester (July 25).
+You will also have a two-hour workshop each week. Workshops will start in Week 2, and there won't be any workshops in Week 1.
+Approximately two-thirds of the workshops groups will operate as in-person on-campus classes, and one-third as online zoom activities. Be sure to choose accordingly when you are making your class selection.
+There will also be two consultation classes each week, one held on-campus in-person, and one as an online zoom activity. You'll be able to drop in and ask questions, or drop in and listen to the answers to questions from other students. (Or drop in and chat about University life in general if you wish.) No new material will be introduced during the consultations.
+All assessment items will be completed online via the LMS. The assessment dates and time are listed in the "Subject Overview" LMS page.
+The textbook is available via Pearson Education online purchase as either a hardcopy (Links to an external site.) or a softcopy (Links to an external site.), and also via Booktopia (Links to an external site.). There are also many second-hand copies available. The subject will follow the textbook closely, and the recommendation is that you purchase or borrow a copy of your own for the semester.
+Instructions in regard to installing software on your computer will appear soon.
+There will be lots of other information building up over the next couple of weeks, and further announcements to tell you about it.
+If you have administrative queries (including AAP documentation to pass on) send email to Alistair at ammoffat@unimelb.edu.au.
+
+See you all soon, when the fun will begin!
+
+Alistair and Artem.
+
+Hello Everybody, hope you are all safe and well, and have been enjoying the break between the semesters.
+
+Welcome to comp10002 Foundations of Algorithms! The official start of semester is still a week away, but I'm going to send you some reminders anyway. Sunday evening announcements (like this one) that provide information about the week ahead will be the standard pattern right through the whole semester. Please get into the habit of reading them right through when they arrive; that way you'll know what is happening each week, and be better equipped to avoid making dumb mistakes (like forgetting quizzes or assignment deadlines).
+
+This week it's all about important subject details for comp10002 in 2022s2:
+
+Lectures will delivered be via pre-recorded videos loaded in advance to the LMS, for you to watch at your own convenience. You can ignore everything that it says in the timetable and class registration system about lecture schedules, and you do not need to register for a lecture stream, nor watch the videos at fixed times.
+
+Our use of pre-recorded videos means that you are free to arrange enrolments that include lecture clashes. But that is not a permission to start drifting; you should always stay up to date with what you are expected to watch each week. Don't allow yourself to fall behind.
+
+The first of the videos will be loaded at the end of this week, and you'll get told about them in next Sunday's regular update.
+
+Workshops will commence in Week Two. We are monitoring enrolments, and adjusting the workshop capacity as required; three further workshops were opened up last week. Adjustments will continue to be made through the next two weeks, so if you don't yet have your "perfect" timetable, you should keep on trying.
+
+Two-thirds of the workshops are on-campus and will run in face-to-face mode as far as possible. The other third will be held by zoom throughout the whole semester.
+
+Make sure you know which type of workshop you have registered for.
+
+There will be an in-person on-campus Consultation Class once a week on Tuesdays at 2:15pm, and an online one each week on Wednesdays at 4:15pm. You'll be able to drop in to either and ask questions, or just come in for a chat with a real live University academic. You can also attend to see what questions other students are asking too, of course. We hope that we'll see many of you in those sessions.
+
+These consultation classes are strictly for student-led Q&A, and there will be no new material introduced.
+
+All assessment will be via on-line activities, and there will not be any in-person or on-campus assessments. You can find details of the 2022s2 assessment components, weights, and dates under "Subject Overview" on the LMS page.
+
+If you are smart, and planning for success, you'll get the two Quiz dates/times and the two assignment due dates/times into your diaries right now!
+
+You are probably going to need your own copy of the textbook, see https://people.eng.unimelb.edu.au/ammoffat/ppsaa/Links to an external site.. The lecture and workshop content closely follows the book.
+
+Smart students will have already located one of the hundreds of second-hand copies floating around Melbourne, and intending-genius students will have already started reading it. You might also find that you have a friend who took this subject in a previous year that you can borrow the book from. No matter how you access the book, you are going to find it challenging to follow the subject without your own copy.
+
+We'll be using Grok for programming, watch out for a registration email late this week and be ready to check that you can access your Grok account and can see the sequence of exercises.
+
+We'll also be linking information about other programming environments that you can use from the LMS later this week.
+
+The LMS page for comp10002 is available, and you should spend some time and go exploring. There will be lots more content coming over the next two weeks, including, as noted above, the first of the lecture videos.
+
+And the Ed Discussion page is also now open, make sure you know how to access it too.
+
+There will be another of these messages next Sunday when the first of the videos has been loaded; in the meantime, enjoy your last week of freedom as best you can, and get set for a great semester of programming in C!
+
+And here it is for the first time, you'll either believe or disbelieve by the end of the semester: Algorithms are Fun!
+
+See you all soon.
+
+Hello Everyone, Week 1 commences tomorrow, and there is a lot that you need to know. Please take the time to read right through this long announcement, so that you don't miss anything.
+
+Subject Structure: In 2022s2 we'll be running multiple components each week:
+
+Pre-recorded lecture videos, which you access via the usual "Lecture Capture" link in the LMS. The first week's videos are now loaded and available, and can be watched just as soon as you want (as of a couple of hours ago, 30 of you had already watched the first one that I recorded yesterday morning); we'll organize them in folders by semester weeks, to help you keep track of where you should be up to. We will normally be expecting that you watch them in sequence, but if you want some excitement, watch lec02-a and lec02-b first before you go back and watch the "administrative" details provided in lec01-a.
+
+The labels "lec01" and so on in the video names connect to the lecture slides file names, lec01.pdf and etc; and the suffix parts "-a" and "-b" and so on in the video names indicate the ordering of the videos for that set of lecture slides. So if you want to find the video recording for slides lec03.pdf, start at the video with the full name "comp10002-lec03-a" and step forwards from there.
+
+The lectures slides for each week's videos will always be linked from the corresponding "Modules -> Weekly Schedule" page. Right now you can only see "Modules -> Weekly Schedule -> Week 01", so there shouldn't be any confusion.
+
+Workshops (starting in Week 2), a two-hour class each week that is one hour of tutorial and one hour of programming lab class.
+
+Around 3/4 of the workshop groups will be in-person classes this semester, and the other quarter will be by zoom. Permanent Zoom links for the zoom workshops will be made available on the LMS later this week, they'll appear at "Modules -> Permanent Zoom Links -> Workshops".
+
+Workshops will not be recorded, and you are expected to attend your class each week.
+
+Consultation sessions with Artem and myself (the two lecturers), see the page at "Modules -> Staff Consultation". One of us will be available in-person for an hour on Tuesday afternoons and available online for an hour on Wednesday afternoons. We'll be there to answer questions about lecture and subject content, or just to chit-chat if there are no content questions. No new material will be introduced. Those times:
+
+In-person, Tuesday 2:15pm-3:15pm, Chem Eng Theater
+Online, Wednesday 4:15pm-5:15pm, Zoom
+We'll be sharing this responsibility on a week-by-week basis, so for the Wednesday sessions please make sure you check who is responsible that week, and use the correct zoom link. (And please only use those Zoom links at that time each week, we both run many Zoom meetings and you won't find any of the other meetings very interesting!) The consultation sessions will not be recorded.
+
+Videos will also be made available on a weekly basis to help you prepare for the workshops, see the "Workshop Videos" folders under Lecture Capture. Video solutions to many of the workshop activities will then be made available at that same page at the end of each week, and solutions to all workshop activities will be made available each week at the page "Modules -> Workshop Solutions". Many of the same solutions are also available via Grok.
+
+The pages at "Modules -> Weekly Schedule" will be updated every week to list the relevant activities for you to undertake that week, and to provide links to the lecture slides (files lec01.pdf, lec02.pdf, and so on). You should review the Weekly Schedule at least once a week, to check that you are on-track.
+
+Plus, these announcements will arrive every Sunday evening, as an annoying reminder that the weeks are ticking by and that if you want to do well you need to stay up to date. (And, from time to time, I'll hide a dad joke at the bottom, as a reward for reading that far down.)
+
+In addition to all of these, the "Ed Discussions" link has been activated in the left-hand menu, and you should be able to click that link and enter with comp10002 showing as a subject. If you have questions, and cannot find an answer there already, help the whole class out by posting your query to the appropriate topic channel, and one of us (or maybe even a knowledgeable student) will post an answer, usually within a few (working) hours.
+
+Health and Safety: The University is requesting that all staff and students wear proper face masks during in-person classes, with the normal medical exemptions continuing to apply.
+
+If you are unwell in any way at all, please do NOT come to campus, even if you have done a RAT and obtained a negative result. Just drop in on any of the online workshops being held that week.
+
+Programming: For your programming work, you may use Grok, and Grok invitations will be generated within another day or two for all enrolled students, and will arrive into your student email. If you are new to Grok, you will need to add some details to your account to make it operational (read the email that you will receive), and should also take a look at the "Modules -> Compiling and Editing -> Guide to Using Grok" page on the LMS.
+
+If you enrolled late and do have Grok access by next weekend, email me at ammoffat@unimelb.edu.au from your student email address and I'll add you manually.
+
+By the end of the semester the expectation is that you will have "outgrown" Grok, and will be compiling and running your programs in a terminal window. The difference between these two approaches is shown in the lecture video lec03-a.
+
+There is a guide to installing jEdit and gcc at "Modules -> Compiling and Editing -> Install gcc and jEdit On Your Own Computer" and a quick guide to Unix shell commands at "Modules -> Compiling and Editing -> Running Programs via Interactive Shells". You are welcome to start the semester using these tools, and there are *no* assessment items or mark allocations that rely on use of Grok.
+
+Assessment: You should make sure that you are familiar with the assessment details that apply to 2022s2, see the LMS "Subject Overview" page. In particular be sure to note the dates/times of the two online Quizzes into your diaries:
+
+Week 5: Wednesday August 24, 4:15pm
+Week 9: Wednesday September 21, 4:15pm
+Both Quizzes will be held fully online. Practice Quizzes and detailed information will be provided approximately one week prior to each of those dates.
+
+Further details of all assessment items are provided in the lec01 slides and in the lec01-a video recording, see the links provided in the page "Modules -> Weekly Schedule -> Week 01".
+
+Questions: The default place for you to ask questions is in the appropriate channel of the Ed Discussion forum. We'll be aiming to provide "same working day" responses to all questions. You can also use the Grok "Tutoring" facility to ask questions about specific programs you are working on.
+
+Or, drop in on any of the in-person or online lecturer consultation sessions.
+
+Personal matters to do with your enrollment, waivers, academic adjustment, special consideration, and so on, should all be directed by email to me, ammoffat@unimelb.edu.au. I'll be trying to achieve the same "within working day" turnaround on student emails, but I know from experience that there will be also be times when I get flooded with requests (especially the days the assignments are due!)
+
+On-Line Etiquette: One thing we learnt through the last couple of years is that if you sit behind a blank Zoom screen with just a picture of a dinosaur showing, then you won't get much benefit. Please turn your video *on* during Zoom workshops and consultations. If you don't want the room behind you to be visible, use the Zoom "virtual background" facility, or adopt a simpler solution, and get a big cardboard box from your local fruit shop, and tape it to the back of your chair. In consultations Artem and I will be asking you to turn on your camera while we are talking to you, and tutors will be doing the same.
+
+And we'll expect that you'll be respectful in all interactions with us, with your tutors, and with your fellow students.
+
+LMS Site and Announcement Settings: I have tried to point out some of the key parts of the LMS page in this (now very long) message. But you should also spend thirty minutes just walking round it for yourself, looking and reading. There is a lot of stuff there, and the more you absorb, the better placed you will be to be successful in this subject.
+
+I'm aware that some of you go to the LMS settings and turn off the "email announcements immediately" option, because some subjects generate many small emails. Well, I suggest that you *don't* do that for comp10002, and that when you see a new email from Artem or myself, you read it very carefully. We'll be trying to limit the number of announcements in comp10002, and any post we generate will be telling you information that it is important for you to know, and which might affect your mark in this subject.
+
+Phew! Ok, that's enough for now, congratulations on making it through to the bottom. Future announcements won't normally be this long, but they *will* all be this important. Here is a summary of important actions for the next few days:
+
+Watch lec02-a, then lec02-b, then lec01-a (yes, that order works fine) just as soon as you can. Indeed, why not watch the first two tonight! And remember to shout out "WOW" and stamp your feet at the right time, so that I can hear you :-)
+
+Allocate time later in the week to go on and watch lec03-a, lec03-b, and lec03-c. The best strategy with the videos is to get ahead and then stay ahead. There are already a few students who have watched all of the Week 1 videos since I linked them yesterday.
+
+Check that you are registered for a workshop (starting in Week 2), and know whether it is an online one or an on-campus one.
+
+Later in the week check that you can access Grok (if you plan to use it, or else download and install jEdit and MinGW/gcc).
+
+Beg or borrow (or buy if you have to) a copy of the textbook (see "Modules -> Recommended Text Book") and start reading it.
+
+Go out for a walk in the sunshine thinking with every step, "comp10002, wow, its going to be a great subject!"
+
+And if you have questions about anything I have written here, post to the Ed Discussion or come to one of the two Week 1 consultations.
+
+Dad Joke: Why are comp10002 students like long-distance sailors?
+Because neither wants to get lost at C.
+
+(Hey, I didn't say the jokes were going to be good...)
+
+Have Fun!!
+
+Hello again, hope you are all safe, hope you are all feeling a bit excited about the semester, and hope you are all now hooked on algorithms.
+
+This message is a reminder of the things happening this week, an encouragement to keep on watching videos and learning the subject content, and if you haven't already, a prod for you to get started on some C programming.
+
+Workshops: These start tomorrow, Monday 1 August.
+
+Please do not attend in-person classes if you are in any way unwell, even if you have completed a negative RAT. If you are even slightly ill, just stay home, and instead attend any one of the online workshops. Note that there is no need to seek permission to do that, and no need to register in any way. The zoom links for the online classes are all visible to everyone at "Modules -> Permanent Zoom Links -> Workshops". Please only click those links at the assigned workshop times!
+
+If are well, and will be attending an in-person class, please note that the University has requested that face masks be worn in all classroom settings unless exemptions apply. (And, your class mates and tutors all asked me to say "thanks in advance!".)
+
+There are workshop videos in "Lecture Capture" -> "Week 02 Workshop Videos" that you can watch in advance of your workshop, to help you prepare.
+
+Lecture Videos: Artem has loaded the next set of videos to be watched during Week Two, you can find them under the Lecture Capture menu item, in the Week 2 folder. The matching lecture slides are available via the links provided in the corresponding page at "Modules -> Weekly Schedule".
+
+Your goal by the end of Week 2 is to have watched though to the end of lec04-d.
+
+From time to time I'll give you some video viewing stats: as of a few minutes ago, here what has been recorded:
+
+Plus, of course, you should be reading Chapter 3 of the textbook by now, and have Chapter 4 on your "up next" reading list.
+
+Consultation: Artem will be host the consultation sessions during Week 2 and Week 3 (on-campus, Tue, 2:15pm to 3:15pm; online, Wed 4:15pm to 5:15pm), details at "Modules -> Permanent Zoom Links -> Staff Consultation". For the online class, please make sure that you use the correct URL, and only click it at the scheduled consultation time.
+
+Questions: Please post questions to the Discussion Forum, rather than sending direct emails to staff. That way everyone benefits from the answers that are provided, and you'll probably also get a faster response. (And if I do get programming and C questions direct from students I'll usually copy them to the Discussion and answer them there anyway.)
+
+Direct email should be reserved for personal issues to do with pre-requisite waivers, academic adjustment, special consideration, and so on. Problems in regard to grok access should also be mailed to me, ammoffat@unimelb.edu.au
+
+And if you haven't yet checked out the Discussion Forum, why not take a look now. There have already been a couple of dozen questions posed and answered.
+
+The Weekly Routine: Finally, note that all of this "what's happening this week" information is also provided via the pages at "Modules" -> "Weekly Schedule". The typical routine will be for the next week's page to be published around Wednesday the week prior, covering the following week's activities, and including release of that next week's videos. Then this "update" announcement will be posted a few days later, usually on the Sunday evening immediately prior to the start of that new week. Workshop solutions (and, as part of Lecture Capture page, solution videos too) will appear after the end of each weekly cycle.
+
+Ok, enough for now. Find your textbook and do some reading tonight. That's the first hour. Then have some dinner and watch a bit of sport on TV or whatever. Then watch the next two lecture videos, that's another hour. And then make sure you are ready for your workshop, even if it's not until later in the week, that's a third hour.
+
+And then, when all that is done, go to bed for your beauty sleep, hoping to have happy dreams about algorithms and C programs.
+
+Hello again, hope you have all been having fun this last week compiling and running helloworld programs (plus more), watching Artem's videos in the lec03 and lec04 sequences; and that you got outside and enjoyed the spectacular Melbourne weather today.
+
+Week 3 Activities. Everything you need for the Week 3 activities is in the LMS right where you would expect to find it, at "Modules -> Weekly Schedule -> Week 3". That page lists what to read (Chapters 5 and 6 of the textbook); what to watch (all of the remaining lec04 videos through to lec04-l); what to prepare for the Workshops this week (Exercises from Chapter 4, plus look at some of the Chapter 5 ones too if you want to get ahead); and provides links to the lecture slides (lec03 and lec04).
+
+Consultation. Artem will available for consultation at the two scheduled times. You should also feel free to post questions to the Ed Discussion, and hopefully have also been regularly reading the questions that other people have posted, and the answers to them.
+
+Workshops. If you have an in-person workshop, please wear a mask (and stay home if unwell, just attend an online one instead); and if you have an online workshop, please turn your camera on.
+
+Note that there are workshop videos in "Lecture Capture" -> "Week 03 Workshop Videos" that you can watch in advance of your workshop, to help you prepare. Solution videos will also appear after the end of each week; I just posted the Week 2 solutions. Workshop videos that end in "-a" are pre-workshop ones, and videos that end in "-b" are the matching solutions.
+
+Quiz 1. I'm also going to take this opportunity to give another reminder about the first Quiz, which will take place between 4:15pm and 5:00pm on Wednesday 24 August; make sure RIGHT NOW that you have it in your diary. That Quiz will cover Chapters 1 to 6 of the textbook (the lec03 and lec04 videos), and there will be a Practice Quiz made available one week prior so that you can calibrate your expectations and get a sense of how you are going.
+
+Ok, that's it for this message, short and sweet this week. It's Sunday evening now, and so you have a choice between watching Commonwealth Games tonight on TV, or some more of Artem's lecture videos on your laptop. I'll leave you to decide where your priorities lie, whether you select entertainment or education. (Or maybe the lecture videos can even provide you with both!)
+
+Good luck choosing...
+
+Hello everyone, hope you have all enjoyed the thunderstorms yesterday and have used the cold weather as a reason to watch videos, do some programming, and read the textbook. And if you haven't watched any videos in the last few days, be sure to do some catching up tonight.
+
+Quiz 1. Some information in connection with Quiz 1:
+
+It will be held on Wednesday 24 August, starting at 4:15pm Melbourne time and finishing at 5:00pm, via the LMS Quizzes facility. You will be allowed 30 minutes within that 45 minute span to complete the questions, so you need to start between 4:15pm and 4:30pm if you want the full 30 minutes.
+If you are not in Melbourne, be very careful with the conversion to your local time.
+The Quiz consists of five multiple-choice questions and one "write a function" question.
+The Quiz covers Chapters 1 to 6 of the textbook, and lecture videos from lec01-a to lec04-l.
+Look for "Quiz 1 Practice" at the end of Week 4 for a sample quiz that you can take up to five times (you'll see mostly different questions each time) to allow you to calibrate your expectations.
+The Quiz is a closed book assessment, and you should make sure you understand what the Academic Honesty expectations are, by reading the Practice Quiz instructions very carefully.
+There is an Academic Honesty Declaration required at the start of the Quiz that has exactly the same wording as appears in the corresponding question in the Practice Quiz. Be sure to answer that question.
+A separate discussion forum has been created, please use it for all Quiz-related questions. You should read it regularly in the lead-up to the Quiz.
+If you have an Academic Adjustment Plan and haven't already communicated it, right now is when need to send it to me, ammoffat@unimelb.edu.au.
+Week 4. All of the routine things in connection with the Week 4 activities (topics covered, lecture recordings to watch, textbook reading, lecture slides, workshop activities, workshop videos, and so on) are listed at "Modules -> Weekly Schedule -> Week 4". Please review that guidance carefully to ensure that you are staying abreast of expectations.
+
+Videos. The first of the lec05-* videos are there for viewing during Week 4, and you'll start falling behind if you don't get through to lec05-f over the next seven days.
+
+We current have 663 enrolled students, and here is what the LMS has recorded in terms of progress:
+
+I know that it's easy to fall behind with the videos, because by the time you have attended to all the things that are scheduled each week for your other subjects, it's easy lose sight of the things where you have to slot them in and manage the timing yourself. So one simple tactic you could employ is add "comp10002 video watching" into your timetable and diary at three slots each week, so that they are built in as part of your routine. Then take your laptop to a coffee shop at the scheduled times and enjoy the breathless excitement of a lecture video while you also enjoy a hit of caffeine. (And if other people at the cafe see how engrossed you are and start watching over your shoulder, well, tell them to enrol next year!)
+
+Consultation. Finally, let me remind you about the consultation sessions, it is me back on duty again for the next two weeks, and I encourage you to drop in with your questions, or even just for a chat. It's very lonely sitting in a lecture theater or a Zoom room with no one arriving to ask questions, and, believe it or not, Artem and I like talking to students! So please call in (2:15 Tue in-person, 4:15 Wednesday via zoom), even if just for a few minutes, and even if just to say hello and provide some reassurance that you are doing ok in the subject and (maybe even hopefully enjoying it?) See "Modules -> Permanent Zoom Links -> Lecturer Consultation" for details.
+
+Ok, that's enough for today. Remember, Quiz 1 is Wednesday 24 August, 4:15pm.
+
+Hello everyone, the moment of truth is fast approaching, we have an assessment activity taking place this week. So it's time for you to stop scrolling through TikTok, and start watching our videos instead; and to stop daydreaming about getting a role on Survivor or the Great Race, and start doing Workshop exercises instead. Yes, seriously, there are marks on the line this week, there for the grabbing (for some of you), and there for the losing (for others of you). Pay attention!
+
+Quiz 1.
+
+The first Quiz will be held this week on Wednesday 24 August, starting at 4:15pm and finishing at 5:00pm, via the LMS Quizzes facility. You will be allowed 30 minutes within that 45 minute span to complete the questions, so you need to start before 4:30pm if you want the full 30 minutes.
+The Quiz consists of five multiple-choice questions and one "write a function" question.
+The Quiz covers Chapters 1 to 6 of the textbook, and lecture videos from lec01-a to lec04-l.
+The Quiz is a closed book assessment, and you should make sure you understand what the Academic Honesty expectations are, by reading the Practice Quiz instructions very carefully.
+There is an Academic Honesty Declaration required at the start of the Quiz that has exactly the same wording as appears in the corresponding question in the Practice Quiz. Be sure to answer that question.
+There is a Practice Quiz that you can take up to five times (you'll see mostly different questions each time) to allow you to calibrate your expectations. I'll post a link to example solutions to the "write a function" sample questions from the Quiz 1 Ed Discussion page on Monday evening, so you can check your answers.
+If you have an Academic Adjustment Plan and haven't already communicated it, do so immediately. After Monday you risk having me say "thank you, I look forward to being able to apply that to Quiz 2".
+Quite remarkably, as of Sunday afternoon, less than 1/4 of the class has attempted the Practice Quiz. WOW!
+
+Stay Up To Date. See the pages at "Modules -> Weekly Schedule" for details of Lecture videos, Workshop videos, Workshop exercises, reading, lectures slides, and so on.
+
+Student Reps. I'm looking for two student reps from the class please, see the information at https://edstem.org/au/courses/8964/discussion/975992 (Links to an external site.). The nomination form is available at https://forms.gle/LMX8NydNF7NQWRF88 (Links to an external site.) and it will stay open until Monday evening.
+
+Consultation. I'll be available on-campus Tuesday afternoon at 2:15 for questions. (I'll also be online in zoom 4:15pm--5:15pm on Wednesday afternoon to take any emergency questions that arise from the Quiz, but not for general subject questions this week, please just put them into the Ed Discussion.)
+
+Summary. Welcome to Week 5, with 10% of your final mark at stake on Wednesday. Now get cracking on some videos. They are educational, they are exciting, they are expensive (you are paying for them), and they are even (sometimes) exhilarating! And you know that watching videos and trying the Practice Quiz are the most important thing you can do this evening.
+
+Hello again, we are entering the busy part of the semester, so put your phone out of reach, buckle up your seat belt, and get ready for the ride.
+
+Assignment 1. The first programming assignment will be available from late Wednesday afternoon (31 August), look for a whole new menu item called "Assignments", and you'll find it in there. There is video to watch, a handout to read carefully, a skeleton program for you to download and study, and also some test data files and corresponding required output. Lots to read, lots to take in and be aware of, and lots to be thinking about. What ever you do, don't leave all that to the last minute; one last minute (or even one last day) just won't be long enough.
+
+Assignment 1 is due at 6pm Friday 16 September. Note that while you are welcome to develop your program in Grok, submissions must be made via the Assignment page in the LMS.
+
+Quizzes. The tutors have had a couple of busy days, and in a few more minutes I'll be clicking the LMS buttons that release the marks, and then posting a mark distribution to the Discussion. I had two people email me on Thursday to confess that they forgot to sit it despite all the reminders and pleadings I had sent; and there were probably others that didn't email because they were too embarrassed to tell me about it. Ooops! Put Quiz 2 in your diary right now, 4:15pm Melbourne time on 21 September. There will be information about coverage, and a practice quiz, released a week prior.
+
+Week 6 Activities. As usual, these are detailed via the Weekly Schedule pages.
+
+Lecture Videos. Many people have said how wonderful the cinematography is, or how insightful and delicately witty the scripts are; some people have said how stunning the special effects are and how spectacular the period costuming is; and one or two have commented on the professionalism of the hair/makeup, and how inspired the casting was.
+
+None of that is true, of course. What IS true is that have to watch them, and that as you do, you'll become more and more infatuated with C programming. Go on, watch another video tonight!!
+
+Consultation. Artem will be taking the calls this week, please visit him Tuesday 2:15pm in-person or 4:15om on-line.
+
+Enjoy Week 6!
+
+Hello everyone, Happy Father's Day, hope you got a chance to talk to your Dad today and make him feel special (did you laugh at one of his tragic jokes, for example?)
+
+And for those of you that are fathers, I hope you told some terrible jokes and got some laughs. Here's one for you to try if you still have an audience. Q: Why did the programming couple get a divorce? A: Because they were a bit tired of being a double, and both were now int to other people! (Boom, boom.)
+
+And now for the real message for today: Welcome to Week 7, we have reached the busy part of the semester, so please read carefully.
+
+Assignment 1. Yes, this is up and running, and "Assignment 1 -- The Video" is setting box office records (more than 280 views so far); it seems to be this weeks' #1 watch. Go to the "Assignments -> Assignment 1" page for detailed information about the Assignment.
+
+Note that I had accidentally allowed a discrepancy between my sample program and the specification to creep in during the development process, and to fix it I updated two of the example test output files earlier this afternoon. There are three paragraphs across test2-out.txt and test3-out.txt where my program had scored them 0.5 too low. Got to https://edstem.org/au/courses/8964/discussion/1000959 (Links to an external site.) if you are after more details.
+
+If you have already copied the data files and output files, copy test2-out.txt and test3-out.txt again so that you get the current versions. And if you are working in Grok, you'll need to copy the revised test2-out.txt and test3-out.txt files and put them into your Grok Assignment folder, over-writing the ones that were there when the Assignment opened.
+
+Looks like I'll only be getting 19/20 this time round.
+
+There have already been quite a number of discussion questions about the assignment, so be sure to head there if something is puzzling you. Check the other Assignment 1 questions before posting (try the "search" facility), to avoid duplicating questions that have already been answered. Roughly speaking, we'll be aiming to respond to all discussion questions within the day they are posted. And don't forget to read other questions and answers while you wait, there might already be something there you hadn't even thought about yet. (Please don't post any programs or functions to the Discussion; and nor to anywhere else.)
+
+Week 7 Activities. As usual, these are detailed via the Weekly Schedule pages, you know where to go looking.
+
+Videos. I'm not going to bore you with numbers today, so here is a reminder in a different format:
+
+Unless you are in the last row, the smartest possible thing you can possibly do is watch two more videos tonight.
+
+And hey, I'll pass on an old proverb handed down from generation to generation: "The very best time to watch a Week 6 video is during Week 6. The second best time to watch a Week 6 video is on the Sunday before Week 7 starts. The very worst time to watch a Week 6 video is in 2023 when you repeat comp10002".
+
+Consultation. Artem will be taking the consultations again this week, please visit him 2:15pm Tuesday on-campus or Wednesday 4:15pm in zoom.
+
+Finally, PS, we are halfway through the subject already, time flies when you are having fun Fun FUN! Please don't leave it to Week 8 before you make a start on your assignment, that will likely lead to tears Tears TEARS!
+
+Hello again, it's been a nice afternoon for going out for a walk in the sunshine; and now that it is raining, it's a Beautiful evening for watching a lecture recording or two; and then soon it will be dark and it will be a BEAUTIFUL night for getting some work done on Assignment 1. What a perfect way to spend a happy September Sunday!
+
+Assignment 1. Unless you recently arrived from Mars, you'll know that this is due at 6pm this coming Friday evening, meaning it has to be your number one activity from now until it is (at least partially, you should be aiming to get Stage 1 done as an absolute minimum) completed. I can see that a number of people have made submissions to Gradescope already (and are maybe finished, or maybe not). Plus, the video is top of the charts at present, with around 650 views so far. And there have been lots of questions in the discussion, another promising sign. (Don't forget to go there and search if you are puzzled about something, the same question has probably already been asked by someone else, and if so, will have already been answered too.)
+
+On Friday at 6:00pm Melbourne time we'll move into "late" territory. Any submission that you make after that time will negate any on-time submissions that you may have made, and will also automatically incur late marks. That submission window will then remain open for a few days, into next week. Students with extensions granted will be able to continue to submit past 6pm Friday without penalty.
+
+And whatever you do, don't forget to "sign" the Authorship Declaration!
+
+Everything Else. Apart from Assignment 1, it's a normal week, and everything is described in the usual place, "Modules -> Weekly Schedule -> Week 08". There's lecture videos to watch (the lec07 series, in Chapter 8 and then Chapter 10), lectures slides to download (lec07.pdf, plus several others too, illustrating particular programs), and workshops to attend. Plus, it's my turn again to host the consultations, and I'll be there in-person 2:15pm Tuesday and online 4:15pm Wednesday to answer questions.
+
+Then, coming up in Week 9, we have another Quiz. There will be a Quiz 2 Practice available in the LMS by the end of this week for you to try next weekend; and make sure that you have the Quiz itself in your diary, 4:15pm to 5:00pm on Wednesday 21 September.
+
+Motto for today. I passed on some "ancient wisdom" last Sunday about watching lecture videos. Well, here is today's motto: the best time to start a programming assignment is the day it is given out. The second best time is right now. There is no third best time.
+
+Have fun programming in Week 8!

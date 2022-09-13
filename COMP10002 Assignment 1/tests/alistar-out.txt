@@ -1,4 +1,3 @@
-"C:\Users\edwin\Desktop\Coding\UOM-Assignments\COMP10002 Assignment 1\cmake-build-debug\Assignment_1.exe" assignment alistair artem programming is fun
 
 ======= Stage 1 [para 1; 56 words]
 
@@ -54,10 +53,9 @@ weeks, and further announcements to tell you about it. If you have
 administrative queries including AAP documentation to pass on send email
 to **Alistair** at ammoffat unimelb. edu. au.
 
-======= Stage 3 [para 3; start 289; length 30; score 3.05]
-up over the next couple of weeks, and further announcements to tell you
-about it. If you have administrative queries including AAP documentation
-to pass on send email to **Alistair**...
+======= Stage 3 [para 3; start 304; length 20; score 4.95]
+If you have administrative queries including AAP documentation to pass
+on send email to **Alistair** at ammoffat unimelb. edu. au.
 
 ======= Stage 1 [para 4; 9 words]
 
@@ -97,10 +95,10 @@ them right through when they arrive; that way you ll know what **is**
 happening each week, and be better equipped to avoid making dumb
 mistakes like forgetting quizzes or **assignment** deadlines
 
-======= Stage 3 [para 7; start 56; length 30; score 5.23]
-them right through when they arrive; that way you ll know what **is**
-happening each week, and be better equipped to avoid making dumb
-mistakes like forgetting quizzes or **assignment**...
+======= Stage 3 [para 7; start 62; length 24; score 6.41]
+that way you ll know what **is** happening each week, and be better
+equipped to avoid making dumb mistakes like forgetting quizzes or
+**assignment**...
 
 ======= Stage 1 [para 8; 13 words]
 
@@ -303,10 +301,9 @@ the videos has been loaded; in the meantime, enjoy your last week of
 freedom as best you can, and get set for a great semester of
 **programming** in C!
 
-======= Stage 3 [para 25; start 10; length 30; score 5.25]
-the first of the videos has been loaded; in the meantime, enjoy your
-last week of freedom as best you can, and get set for a great semester
-of **programming**...
+======= Stage 3 [para 25; start 21; length 21; score 6.78]
+enjoy your last week of freedom as best you can, and get set for a great
+semester of **programming** in C!
 
 ======= Stage 1 [para 26; 23 words]
 
@@ -395,9 +392,9 @@ the corresponding Modules Weekly Schedule page. Right...
 Workshops starting in Week 2 a two hour class each week that **is** one
 hour of tutorial and one hour of **programming** lab class.
 
-======= Stage 3 [para 33; start 0; length 22; score 8.40]
+======= Stage 3 [para 33; start 0; length 24; score 8.50]
 Workshops starting in Week 2 a two hour class each week that **is** one
-hour of tutorial and one hour of **programming**...
+hour of tutorial and one hour of **programming** lab class.
 
 ======= Stage 1 [para 34; 48 words]
 
@@ -664,9 +661,9 @@ fruit shop, and tape it to the back of your chair. In consultations
 **Artem** and I will be asking you to turn on your camera while we are
 talking to you, and tutors will be doing the same.
 
-======= Stage 3 [para 54; start 0; length 20; score 3.10]
-On Line Etiquette: One thing we learnt through the last couple of years
-**is** that if you sit behind a...
+======= Stage 3 [para 54; start 91; length 20; score 3.55]
+In consultations **Artem** and I will be asking you to turn on your
+camera while we are talking to you,...
 
 ======= Stage 1 [para 55; 22 words]
 
@@ -703,9 +700,9 @@ comp10002, and any post we generate will be telling you information that
 it **is** important for you to know, and which might affect your mark in
 this subject.
 
-======= Stage 3 [para 57; start 0; length 20; score 2.40]
-I m aware that some of you go to the LMS settings and turn off the email
-announcements immediately option,...
+======= Stage 3 [para 57; start 28; length 22; score 3.59]
+I suggest that you don t do that for comp10002, and that when you see a
+new email from **Artem** or myself,...
 
 ======= Stage 1 [para 58; 42 words]
 
@@ -838,9 +835,8 @@ encouragement to keep on watching videos and learning the subject
 content, and if you haven t already, a prod for you to get started on
 some C **programming**.
 
-======= Stage 3 [para 70; start 9; length 31; score 5.49]
-this week, an encouragement to keep on watching videos and learning the
-subject content, and if you haven t already, a prod for you to get
+======= Stage 3 [para 70; start 20; length 20; score 6.30]
+the subject content, and if you haven t already, a prod for you to get
 started on some C **programming**.
 
 ======= Stage 1 [para 71; 7 words]
@@ -940,9 +936,9 @@ Week 2 and Week 3 on campus, Tue, 2: 15pm to 3: 15pm; online, Wed 4:
 Consultation For the online class, please make sure that you use the
 correct URL, and only click it at the scheduled consultation time.
 
-======= Stage 3 [para 79; start 0; length 20; score 4.60]
+======= Stage 3 [para 79; start 0; length 21; score 4.80]
 Consultation: **Artem** will be host the consultation sessions during
-Week 2 and Week 3 on campus, Tue, 2: 15pm to...
+Week 2 and Week 3 on campus, Tue, 2: 15pm to 3:...
 
 ======= Stage 1 [para 80; 59 words]
 
@@ -954,10 +950,9 @@ response. And if I do get **programming** and C questions direct from
 students I ll usually copy them to the Discussion and answer them there
 anyway.
 
-======= Stage 3 [para 80; start 10; length 30; score 5.25]
-sending direct emails to staff. That way everyone benefits from the
-answers that are provided, and you ll probably also get a faster
-response. And if I do get **programming**...
+======= Stage 3 [para 80; start 25; length 20; score 6.53]
+and you ll probably also get a faster response. And if I do get
+**programming** and C questions direct from...
 
 ======= Stage 1 [para 81; 66 words]
 
@@ -1022,7 +1017,7 @@ compiling and running helloworld programs plus more watching **Artem** s
 videos in the lec03 and lec04 sequences; and that you got outside and
 enjoyed the spectacular Melbourne weather today.
 
-======= Stage 3 [para 85; start 0; length 21; score 5.50]
+======= Stage 3 [para 85; start 0; length 21; score 6.00]
 Hello again, hope you have all been having **fun** this last week
 compiling and running helloworld programs plus more watching **Artem**...
 
@@ -1102,10 +1097,9 @@ laptop. I ll leave you to decide where your priorities lie, whether you
 select entertainment or education. Or maybe the lecture videos can even
 provide you with both!
 
-======= Stage 3 [para 91; start 5; length 30; score 2.50]
-this message, short and sweet this week. It s Sunday evening now, and so
-you have a choice between watching Commonwealth Games tonight on TV, or
-some more of **Artem**...
+======= Stage 3 [para 91; start 30; length 21; score 3.67]
+or some more of **Artem** s lecture videos on your laptop. I ll leave
+you to decide where your priorities lie,...
 
 ======= Stage 1 [para 92; 3 words]
 
@@ -1224,9 +1218,9 @@ say hello and provide some reassurance that you are doing ok in the
 subject and maybe even hopefully enjoying it? See Modules Permanent Zoom
 Links Lecturer Consultation for details.
 
-======= Stage 3 [para 99; start 0; length 22; score 3.20]
-Consultation. Finally, let me remind you about the consultation
-sessions, it **is** me back on duty again for the next two weeks,...
+======= Stage 3 [para 99; start 59; length 20; score 3.62]
+believe it or not, **Artem** and I like talking to students! So please
+call in 2: 15 Tue in person,...
 
 ======= Stage 1 [para 100; 15 words]
 
@@ -1376,9 +1370,9 @@ available from late Wednesday afternoon 31 August look for a whole new...
 you are welcome to develop your program in Grok, submissions must be
 made via the **Assignment** page in the LMS.
 
-======= Stage 3 [para 110; start 0; length 20; score 8.10]
+======= Stage 3 [para 110; start 0; length 21; score 8.30]
 **Assignment** 1 **is** due at 6pm Friday 16 September. Note that while
-you are welcome to develop your program in...
+you are welcome to develop your program in Grok,...
 
 ======= Stage 1 [para 111; 110 words]
 
@@ -1439,9 +1433,9 @@ with C **programming**.
 Consultation. **Artem** will be taking the calls this week, please visit
 him Tuesday 2: 15pm in person or 4: 15om on line.
 
-======= Stage 3 [para 115; start 0; length 20; score 4.60]
+======= Stage 3 [para 115; start 0; length 22; score 4.70]
 Consultation. **Artem** will be taking the calls this week, please visit
-him Tuesday 2: 15pm in person or 4: 15om...
+him Tuesday 2: 15pm in person or 4: 15om on line.
 
 ======= Stage 1 [para 116; 3 words]
 
@@ -1471,10 +1465,9 @@ an audience. Q: Why did the **programming** couple get a divorce? A:
 Because they were a bit tired of being a double, and both were now int
 to other people! Boom, boom.
 
-======= Stage 3 [para 118; start 7; length 30; score 5.38]
-fathers, I hope you told some terrible jokes and got some laughs. Here s
-one for you to try if you still have an audience. Q: Why did the
-**programming**...
+======= Stage 3 [para 118; start 32; length 20; score 6.76]
+Q: Why did the **programming** couple get a divorce? A: Because they
+were a bit tired of being a double,...
 
 ======= Stage 1 [para 119; 25 words]
 
@@ -1524,10 +1517,9 @@ out. txt and test3 out. txt files and put them into your Grok
 **Assignment** folder, over writing the ones that were there when the
 **Assignment** opened.
 
-======= Stage 3 [para 122; start 26; length 30; score 4.42]
-versions. And if you are working in Grok, you ll need to copy the
-revised test2 out. txt and test3 out. txt files and put them into your
-Grok **Assignment**...
+======= Stage 3 [para 122; start 47; length 21; score 7.06]
+txt files and put them into your Grok **Assignment** folder, over
+writing the ones that were there when the **Assignment** opened.
 
 ======= Stage 1 [para 123; 12 words]
 
@@ -1550,9 +1542,10 @@ questions and answers while you wait, there might already be something
 there you hadn t even thought about yet. Please don t post any programs
 or functions to the Discussion; and nor to anywhere else.
 
-======= Stage 3 [para 124; start 0; length 20; score 7.10]
+======= Stage 3 [para 124; start 0; length 28; score 8.30]
 There have already been quite a number of discussion questions about the
-**assignment**, so be sure to head there if...
+**assignment**, so be sure to head there if something **is** puzzling
+you. Check the other **Assignment**...
 
 ======= Stage 1 [para 125; 19 words]
 
@@ -1604,9 +1597,9 @@ Consultation. **Artem** will be taking the consultations again this
 week, please visit him 2: 15pm Tuesday on campus or Wednesday 4: 15pm in
 zoom.
 
-======= Stage 3 [para 129; start 0; length 20; score 4.60]
+======= Stage 3 [para 129; start 0; length 21; score 4.80]
 Consultation. **Artem** will be taking the consultations again this
-week, please visit him 2: 15pm Tuesday on campus or Wednesday...
+week, please visit him 2: 15pm Tuesday on campus or Wednesday 4:...
 
 ======= Stage 1 [para 130; 42 words]
 
@@ -1616,10 +1609,9 @@ you are having **fun** **Fun** **FUN**! Please don t leave it to Week 8
 before you make a start on your **assignment**, that will likely lead to
 tears Tears TEARS!
 
-======= Stage 3 [para 130; start 4; length 30; score 8.37]
-halfway through the subject already, time flies when you are having
-**fun** **Fun** **FUN**! Please don t leave it to Week 8 before you make
-a start on your **assignment**,...
+======= Stage 3 [para 130; start 9; length 25; score 9.69]
+time flies when you are having **fun** **Fun** **FUN**! Please don t
+leave it to Week 8 before you make a start on your **assignment**,...
 
 ======= Stage 1 [para 131; 67 words]
 
@@ -1630,10 +1622,9 @@ watching a lecture recording or two; and then soon it will be dark and
 it will be a BEAUTIFUL night for getting some work done on
 **Assignment** 1. What a perfect way to spend a happy September Sunday!
 
-======= Stage 3 [para 131; start 26; length 30; score 4.42]
-Beautiful evening for watching a lecture recording or two; and then soon
-it will be dark and it will be a BEAUTIFUL night for getting some work
-done on **Assignment**...
+======= Stage 3 [para 131; start 35; length 22; score 6.03]
+and then soon it will be dark and it will be a BEAUTIFUL night for
+getting some work done on **Assignment** 1.
 
 ======= Stage 1 [para 132; 136 words]
 
@@ -1650,9 +1641,9 @@ another promising sign. Don t forget to go there and search if you are
 puzzled about something, the same question has probably already been
 asked by someone else, and if so, will have already been answered too.
 
-======= Stage 3 [para 132; start 0; length 20; score 8.10]
+======= Stage 3 [para 132; start 0; length 21; score 8.30]
 **Assignment** 1. Unless you recently arrived from Mars, you ll know
-that this **is** due at 6pm this coming Friday...
+that this **is** due at 6pm this coming Friday evening,...
 
 ======= Stage 1 [para 133; 69 words]
 
@@ -1712,10 +1703,10 @@ to start a **programming** **assignment** **is** the day it **is** given
 out. The second best time **is** right now. There **is** no third best
 time.
 
-======= Stage 3 [para 137; start 0; length 30; score 13.60]
-Motto for today. I passed on some ancient wisdom last Sunday about
-watching lecture videos. Well, here **is** today s motto: the best time
-to start a **programming** **assignment** **is**...
+======= Stage 3 [para 137; start 16; length 29; score 15.78]
+here **is** today s motto: the best time to start a **programming**
+**assignment** **is** the day it **is** given out. The second best time
+**is** right now. There **is**...
 
 ======= Stage 1 [para 138; 6 words]
 
@@ -1726,5 +1717,3 @@ Have **fun** **programming** in Week 8!
 Have **fun** **programming** in Week 8!
 
 ta daa!
-
-Process finished with exit code 0
