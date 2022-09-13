@@ -1,83 +1,7 @@
-/* Program to generate term-biased snippets for paragraphs of text.
-
-   Skeleton program written by Alistair Moffat, ammoffat@unimelb.edu.au,
-   August 2022, with the intention that it be modified by students
-   to add functionality, as required by the assignment specification.
-
-   Student Authorship Declaration:
-
-   (1) I certify that except for the code provided in the initial skeleton
-   file, the  program contained in this submission is completely my own
-   individual work, except where explicitly noted by further comments that
-   provide details otherwise.  I understand that work that has been developed
-   by another student, or by me in collaboration with other students, or by
-   non-students as a result of request, solicitation, or payment, may not be
-   submitted for assessment in this subject.  I understand that submitting for
-   assessment work developed by or in collaboration with other students or
-   non-students constitutes Academic Misconduct, and may be penalized by mark
-   deductions, or by other penalties determined via the University of
-   Melbourne Academic Honesty Policy, as described at
-   https://academicintegrity.unimelb.edu.au.
-
-   (2) I also certify that I have not provided a copy of this work in either
-   softcopy or hardcopy or any other form to any other student, and nor will I
-   do so until after the marks are released. I understand that providing my
-   work to other students, regardless of my intention or any undertakings made
-   to me by that other student, is also Academic Misconduct.
-
-   (3) I further understand that providing a copy of the assignment
-   specification to any form of code authoring or assignment tutoring service,
-   or drawing the attention of others to such services and code that may have
-   been made available via such a service, may be regarded as Student General
-   Misconduct (interfering with the teaching activities of the University
-   and/or inciting others to commit Academic Misconduct).  I understand that
-   an allegation of Student General Misconduct may arise regardless of whether
-   or not I personally make use of such solutions or sought benefit from such
-   actions.
-*/
-
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
-
-#define MAX_WORD_LEN 23     // Max chars per word.
-#define MAX_PARA_LEN 10000  // Max words per paragraph.
-#define MAX_SNIPPET_LEN 30  // Maximum length of snippets.
-#define MIN_SNIPPET_LEN 20  // Minimum length of snippets.
-#define MAX_OUTPUT_LINE 72  // Maximum characters of any output.
-#define MAX_TERMS 50        // Maximum amount of query terms provided.
-
-#define TRUE 1       // Used for infinite loop in main.
-#define NO_MATCH -1  // Returns from is_query if the word isn't a query.
-#define PARA_END 1   // Returns from get_word if it's the end of a paragraph.
-#define WORD_FND 2   // Returns from get_word if a word is found.
-
-#define TERM_PUNCT ".,;:!?"  // Terminating punctuation that may follow a word.
-#define NEEDS_DOTS ",;:*"  // Terminating punctuation that requires dots added.
-#define PARA_SEPARATOR "\n\n"  // String pattern that separates paragraphs.
-#define DDOTS "..."  // Characters inserted to indicate omitted text.
-#define BBOLD "**"   // Characters inserted before and after a bold word.
-#define BBOLD_LEN 4 // Length of BBOLD when a word is surrounded.
-
-// Normal Words
-typedef char word_t[MAX_WORD_LEN + 1]; // Stores normal words
-typedef word_t para_t[MAX_PARA_LEN + 1]; // Stores normal paragraphs
-
-// Formatted Words - Format: [BBOLD](word)[BBOLD][Punctuation][\0]
-typedef char fword_t[MAX_WORD_LEN + BBOLD_LEN + 2]; // Stores formatted words.
-typedef word_t fpara_t[MAX_PARA_LEN + 1]; // Stores formatted word paragraphs.
-
-// Helper Function prototypes
-extern char* strdup(const char*);
-int max(int n1, int n2);
-int min(int n1, int n2);
-int getLastIndex(const char *str);
-int isPunct(const char c);
-int getPunctIndex(const char *str);
-int alNumLen(const char *str);
-int need_dots(const char *str);
-char *getLowerAlNum(const char *str);
-int isQuery(const char *str, const char *argv[]);
+#include "helper.h"
 
 // Function Prototypes
 int get_word(para_t words, const int *word_count);
@@ -90,26 +14,24 @@ double getScore(const para_t words, int start, int end, const char *argv[]);
 
 /* Main Driver function to read input and print output.*/
 int main(int argc, const char *argv[]) {
-    // Temporary variables for the program.
     int getword_code, word_count = 0, para_count = 0, matches, start, end;
     double score = 0;
-    // Stores normal and formatted paragraphs.
-    para_t paragraph;
-    fpara_t formatted_paragraph;
+    para_t para;
+    fpara_t formatted_para;
 
-    // Loops through every paragraph until EOF.
+    // Loops through every para until EOF.
     while (TRUE) {
-        // Word Loop that stores all words into 'paragraph' from input.
+        // Word Loop that stores all words into 'para' from input.
         while (TRUE) {
-            getword_code = get_word(paragraph, &word_count);
+            getword_code = get_word(para, &word_count);
             if (getword_code != WORD_FND) break;  // Break if EOF or PARA_END
             else word_count++;  // Increment word count
         }
 
-        // Formats paragraph for Stage 2.
-        formatPara(paragraph, formatted_paragraph, argv, &matches);
+        // Formats para for Stage 2.
+        formatPara(para, formatted_para, argv, &matches);
         // Computes the lowest score, start & end indices for Stage 3.
-        calcLowestScore(paragraph, word_count, argv, &start, &end, &score);
+        calcLowestScore(para, word_count, argv, &start, &end, &score);
 
         // Prints out results for each stage.
         printf("\n======= Stage 1 [para %d; %d words]\n"
@@ -117,18 +39,18 @@ int main(int argc, const char *argv[]) {
 
         printf("\n======= Stage 2 [para %d; %d words; %d matches]\n"
                ,para_count,word_count, matches);
-        printPara(formatted_paragraph, 0, word_count, 0);
+        printPara(formatted_para, 0, word_count, 0);
 
         printf("\n======= Stage 3 [para %d; start %d; length %d; score %.2lf]\n"
                ,para_count, start, end - start, score);
-        printPara(formatted_paragraph, start, end, 1);
+        printPara(formatted_para, start, end, 1);
 
         if (getword_code == EOF) break;  // Terminate loop if EOF is reached.
 
-        // Reset variables for next paragraph.
+        // Reset variables for next para.
         score = 0, matches = 0, word_count = 0;
-        memset(paragraph, 0, MAX_PARA_LEN);
-        memset(formatted_paragraph, 0, MAX_PARA_LEN);
+        memset(para, 0, MAX_PARA_LEN);
+        memset(formatted_para, 0, MAX_PARA_LEN);
     }
     printf("\nta daa!\n");
     return 0;
@@ -318,89 +240,3 @@ void formatPara(const para_t words, fpara_t output, const char *argv[],
         strcpy(output[i], result);
     }
 }
-
-// Given two ints, returns the larger one.
-int max(int n1, int n2) { return n1 > n2 ? n1 : n2; }
-// Given two ints, returns the smaller one.
-int min(int n1, int n2) { return n1 < n2 ? n1 : n2; }
-// Returns the last index of a string.
-int getLastIndex(const char *str) { return strlen(str) - 1; }
-// Returns if a character is contained in TERM_PUNCT.
-int isPunct(const char c) { return strchr(TERM_PUNCT, c) != NULL; }
-
-/**
- * Returns the index of the first punctuation from the end of the word.
- * @param str word_t to iterate.
- * @return Index of first TERM_PUNCT from the end. 0 if it doesn't exist.
- */
-int getPunctIndex(const char *str) {
-    if (str[0] == '\0') return 0;
-    for (int i = getLastIndex(str); i >= 0; i--)
-        if (isPunct(str[i])) return i;
-    return 0;
-}
-
-/**
- * Returns the alphanumeric length of a string, by iterating and stopping
- * at the first non-alphanumeric char.
- * @param str String to iterate.
- * @return String length until the first non-alphanumeric char.
- */
-int alNumLen(const char *str) {
-    int i = 0;
-    for (; str[i]; i++)
-        if (!isalnum(str[i])) return i;
-    return i;
-}
-
-/**
- * Determines if an ending word requires dots.
- * Dots are required if the ending char is alphanumeric or in NEEDS_DOTS.
- * @param str String containing the ending word.
- * @return 1 if dots are required, 0 otherwise.
- */
-int need_dots(const char *str) {
-    // Iterates the word backwards to find the last char
-    for (int i = getLastIndex(str); i >= 0; i--) {
-        // Skip empty and new line chars.
-        if (strchr("\n ", str[i])) continue;
-        // TRUE, as last char is in NEEDS_DOTS or is alphanumeric.
-        if (strchr(NEEDS_DOTS, str[i]) != NULL || isalnum(str[i])) return 1;
-        break;
-    }
-    return 0;
-}
-
-/**
- * Returns a lower case copy of a string with punctuation removed.
- * All characters are ignored after the first non-alphanumeric char.
- * @param str Original string.
- * @return A processed copy of the string.
- */
-char *getLowerAlNum(const char *str) {
-    char *dup = (char *)strdup(str);  // Duplicates the string.
-    // Loops through each char in the duped string.
-    for (int i = 0; dup[i]; i++) {
-        // Stop if a non-alphanumeric char is found.
-        if (!isalnum(dup[i]) && (dup[i] = '\0')) break;
-        // Otherwise, overwrite with a lowercase char.
-        dup[i] = tolower(dup[i]);
-    }
-    return dup;
-}
-
-/**
- * Checks if a string matches a term provided as an argument.
- * Punctuation is skipped, and the comparison is case insensitive.
- * @param str String to check.
- * @param argv Program arguments.
- * @return The index of the argument, or -1 if it doesn't match.
- */
-int isQuery(const char *str, const char *argv[]) {
-    for (int j = 1; argv[j]; ++j)  // 0th argument is the file path.
-        if (strcmp(getLowerAlNum((char *)str),
-                   getLowerAlNum((char *)argv[j])) == 0) return j;
-    return NO_MATCH;
-}
-
-// algorithms are fun
