@@ -40,24 +40,40 @@
 #include <stdio.h>
 #include <string.h>
 
-#define MAX_WORD_LEN 23     // Max chars per word.
-#define MAX_PARA_LEN 10000  // Max words per paragraph.
-#define MAX_SNIPPET_LEN 30  // Maximum length of snippets.
-#define MIN_SNIPPET_LEN 20  // Minimum length of snippets.
-#define MAX_OUTPUT_LINE 72  // Maximum characters of any output.
-#define MAX_TERMS 50        // Maximum amount of query terms provided.
+/* maximum number of characters per word */
+#define MAX_WORD_LEN 23
+/* maximum number of words per paragraph */
+#define MAX_PARA_LEN 10000
 
-#define TRUE 1       // Used for infinite loop in main.
-#define NO_MATCH -1  // Returns from is_query if the word isn't a query.
-#define PARA_END 1   // Returns from get_word if it's the end of a paragraph.
-#define WORD_FND 2   // Returns from get_word if a word is found.
+/* return code from get_word if end of paragraph found */
+#define PARA_END 1
+/* return code from get_word if a word successfully found */
+#define WORD_FND 2
 
-#define TERM_PUNCT ".,;:!?"  // Terminating punctuation that may follow a word.
-#define NEEDS_DOTS ",;:*"  // Terminating punctuation that requires dots added.
-#define PARA_SEPARATOR "\n\n"  // String pattern that separates paragraphs.
-#define DDOTS "..."  // Characters inserted to indicate omitted text.
-#define BBOLD "**"   // Characters inserted before and after a bold word.
-#define BBOLD_LEN 4 // Length of BBOLD when a word is surrounded.
+/* terminating punctuation that may follow a word */
+#define TERM_PUNCT ".,;:!?"
+/* terminating punctuation that needs dots added */
+#define NEEDS_DOTS ",;:"
+/* the string the separates paragraphs */
+#define PARA_SEPARATOR "\n\n"
+/* insertion characters to indicate "bold" */
+#define BBOLD "**"
+/* length of those characters when wrapped around a word */
+#define BBOLD_LEN 4
+/* insertion characters to indicate omitted text */
+#define DDOTS "..."
+
+/* maximum words in any output snippet */
+#define MAX_SNIPPET_LEN 30
+/* minimum words in any output snippet */
+#define MIN_SNIPPET_LEN 20
+/* maximum length of output lines */
+#define MAX_OUTPUT_LINE 72
+
+/* maximum terms allowed on command line */
+#define MAX_TERMS 50
+/* signal for no match between word and query term */
+#define NO_MATCH (-1)
 
 // Normal Words
 typedef char word_t[MAX_WORD_LEN + 1]; // Stores normal words
@@ -73,7 +89,7 @@ int max(int n1, int n2);
 int min(int n1, int n2);
 int getLastIndex(const char *str);
 int isPunct(const char c);
-int getPunctIndex(const char *str);
+int isWordPunct(const char *str);
 int alNumLen(const char *str);
 int need_dots(const char *str);
 char *getLowerAlNum(const char *str);
@@ -91,16 +107,21 @@ double getScore(const para_t words, int start, int end, const char *argv[]);
 /* Main Driver function to read input and print output.*/
 int main(int argc, const char *argv[]) {
     // Temporary variables for the program.
-    int getword_code, word_count = 0, para_count = 0, matches, start, end;
+    int getword_code, word_count, start, end, para_count = 0, matches = 0;
     double score = 0;
     // Stores normal and formatted paragraphs.
     para_t paragraph;
     fpara_t formatted_paragraph;
 
     // Loops through every paragraph until EOF.
-    while (TRUE) {
+    while (1) {
+        // Reset variables for next paragraph.
+        score = 0, matches = 0, word_count = 0;
+        memset(paragraph, 0, MAX_PARA_LEN);
+        memset(formatted_paragraph, 0, MAX_PARA_LEN);
+
         // Word Loop that stores all words into 'paragraph' from input.
-        while (TRUE) {
+        while (1) {
             getword_code = get_word(paragraph, &word_count);
             if (getword_code != WORD_FND) break;  // Break if EOF or PARA_END
             else word_count++;  // Increment word count
@@ -113,22 +134,17 @@ int main(int argc, const char *argv[]) {
 
         // Prints out results for each stage.
         printf("\n======= Stage 1 [para %d; %d words]\n"
-               ,++para_count, word_count);
+                ,++para_count, word_count);
 
         printf("\n======= Stage 2 [para %d; %d words; %d matches]\n"
-               ,para_count,word_count, matches);
+                ,para_count,word_count, matches);
         printPara(formatted_paragraph, 0, word_count, 0);
 
         printf("\n======= Stage 3 [para %d; start %d; length %d; score %.2lf]\n"
-               ,para_count, start, end - start, score);
+                ,para_count, start, end - start, score);
         printPara(formatted_paragraph, start, end, 1);
 
         if (getword_code == EOF) break;  // Terminate loop if EOF is reached.
-
-        // Reset variables for next paragraph.
-        score = 0, matches = 0, word_count = 0;
-        memset(paragraph, 0, MAX_PARA_LEN);
-        memset(formatted_paragraph, 0, MAX_PARA_LEN);
     }
     printf("\nta daa!\n");
     return 0;
@@ -137,30 +153,34 @@ int main(int argc, const char *argv[]) {
 /**
  * Reads and stores one word from stdin. One char
  * of sensible trailing punctuation is retained.
+ * Words MUST NOT be longer then MAX_WORD_LEN chars in length.
  * @param words Array where the read word is stored.
  * @param word_count Int position of the next word in words.
+ * MUST NOT be greater then MAX_PARA_LEN.
  * @return EOF (End of File), PARA_END (Paragraph Ended) or
  * WORD_FOUND (Word Found).
  */
 int get_word(para_t words, const int *word_count) {
     word_t word; // Word being read.
-    char in_char; // Char from stdin.
+    char c; // Char from stdin.
     int word_len = 0, sep_index = 0; // Word length and index of separator.
 
     // Handles non-alphanumeric chars before the word.
-    while (!isalnum(in_char = getchar())) {
+    while (!isalnum(c = getchar())) {
         // Checks for PARA_END and EOF.
-        sep_index = (in_char == PARA_SEPARATOR[sep_index] ? sep_index + 1 : 0);
-        if (in_char == EOF) return EOF;
+        sep_index = (c == PARA_SEPARATOR[sep_index] ? sep_index + 1 : 0);
+        if (c == EOF) return EOF;
         if (sep_index == strlen(PARA_SEPARATOR)) return PARA_END;
     }
 
-    // Loops through alphanumeric chars during the word and stores them.
-    while (MAX_WORD_LEN > word_len && (word[word_len++] = in_char)) {
-        in_char = getchar();  // Collect the next char.
-        if (!isalnum(in_char)) {
+    // Loops through alphanumeric chars during the word.
+    while (MAX_WORD_LEN > word_len) {
+        word[word_len++] = c; // Stores the character.
+        c = getchar();  // Collect the next char.
+
+        if (!isalnum(c)) {
             // Store one trailing puncutation if found.
-            if (isPunct(in_char)) word[word_len++] = in_char;
+            if (isPunct(c)) word[word_len++] = c;
             // Escape the loop as char is no longer alphanumeric.
             break;
         }
@@ -189,7 +209,7 @@ double getScore(const para_t words, int start, int end, const char *argv[]) {
 
     for (int i = start; i < end; i++) {
         // Check if the word is a query term.
-        key_index = isQuery((char *)words[i], argv);
+        key_index = isQuery((char*) words[i], argv);
 
         // Continue if the word is not a query term
         if (key_index == NO_MATCH) continue;
@@ -208,9 +228,9 @@ double getScore(const para_t words, int start, int end, const char *argv[]) {
     }
 
     // + 0.6 points if the word before is punctuated.
-    if (start == 0 || getPunctIndex((char *)words[start - 1])) score += 0.6;
+    if (start == 0 || isWordPunct((char*) words[start - 1])) score += 0.6;
     // + 0.3 points if the ending word is punctuated.
-    if (getPunctIndex((char *)words[end - 1])) score += 0.3;
+    if (isWordPunct((char*) words[end - 1])) score += 0.3;
     // - 0.1 point for each word over MIN_SNIPPET_LEN
     score += max((end - start) - MIN_SNIPPET_LEN, 0) * -0.1;
 
@@ -292,19 +312,19 @@ void formatPara(const para_t words, fpara_t output, const char *argv[],
 
     for (int i = 0; words[i][0]; i++) {
         // Duplicate the word to be modified, and reset suffix result.
-        strcpy(word, (char *)strdup(words[i]));
+        strcpy(word, (char*) strdup(words[i]));
         strcpy(suffix, "");
         strcpy(result, "");
 
         // Update is_query by checking if the word matches a query term.
-        is_query = isQuery((char *)&word, argv) != NO_MATCH;
+        is_query = isQuery((char*) &word, argv) != NO_MATCH;
 
         // If word is query, update matches variable.
         if (is_query && (*matches += 1)) {
             strcat(suffix, BBOLD);  // Append BBOLD to suffix
 
             // Handles bolding words with punctuation
-            if (punct_index = getPunctIndex((char *)&word), punct_index != 0) {
+            if (punct_index = isWordPunct((char*) &word), punct_index != 0) {
                 // Remove punctuation char from word
                 strcpy(&word[punct_index], "\0");
                 // Append punctuation to suffix
@@ -314,7 +334,7 @@ void formatPara(const para_t words, fpara_t output, const char *argv[],
 
         // Store the formatted word. Format: [BBOLD](word)[BBOLD][PUNCTUATION]
         snprintf(result, sizeof result, "%s%s%s",
-                 (is_query ? BBOLD : ""), (char *)&word, suffix);
+                 (is_query ? BBOLD : ""), (char*) &word, suffix);
         strcpy(output[i], result);
     }
 }
@@ -330,12 +350,13 @@ int isPunct(const char c) { return strchr(TERM_PUNCT, c) != NULL; }
 
 /**
  * Returns the index of the first punctuation from the end of the word.
+ * The 0th character should never be a punctuation, otherwise its not a word!
  * @param str word_t to iterate.
  * @return Index of first TERM_PUNCT from the end. 0 if it doesn't exist.
  */
-int getPunctIndex(const char *str) {
-    if (str[0] == '\0') return 0;
-    for (int i = getLastIndex(str); i >= 0; i--)
+int isWordPunct(const char *str) {
+    if (str[0] == '\0') return 0; // Handles NULL words.
+    for (int i = getLastIndex(str); i > 0; i--)
         if (isPunct(str[i])) return i;
     return 0;
 }
@@ -364,8 +385,9 @@ int need_dots(const char *str) {
     for (int i = getLastIndex(str); i >= 0; i--) {
         // Skip empty and new line chars.
         if (strchr("\n ", str[i])) continue;
-        // TRUE, as last char is in NEEDS_DOTS or is alphanumeric.
-        if (strchr(NEEDS_DOTS, str[i]) != NULL || isalnum(str[i])) return 1;
+        // TRUE, as last char is in NEEDS_DOTS or BBOLD or is alphanumeric.
+        if (strchr(NEEDS_DOTS, str[i]) != NULL || isalnum(str[i]) ||
+            strchr(BBOLD, str[i]) != NULL) return 1;
         break;
     }
     return 0;
@@ -378,7 +400,7 @@ int need_dots(const char *str) {
  * @return A processed copy of the string.
  */
 char *getLowerAlNum(const char *str) {
-    char *dup = (char *)strdup(str);  // Duplicates the string.
+    char *dup = (char*) strdup(str);  // Duplicates the string.
     // Loops through each char in the duped string.
     for (int i = 0; dup[i]; i++) {
         // Stop if a non-alphanumeric char is found.
@@ -398,8 +420,8 @@ char *getLowerAlNum(const char *str) {
  */
 int isQuery(const char *str, const char *argv[]) {
     for (int j = 1; argv[j]; ++j)  // 0th argument is the file path.
-        if (strcmp(getLowerAlNum((char *)str),
-                   getLowerAlNum((char *)argv[j])) == 0) return j;
+        if (strcmp(getLowerAlNum((char*) str),
+                   getLowerAlNum((char*) argv[j])) == 0) return j;
     return NO_MATCH;
 }
 

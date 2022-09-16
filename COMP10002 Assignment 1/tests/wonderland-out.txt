@@ -1,4 +1,3 @@
-"C:\Users\edwin\Desktop\Coding\UOM-Assignments\COMP10002 Assignment 1\cmake-build-debug\Assignment_1.exe" Scotland Genre Scot Alice
 
 ======= Stage 1 [para 1; 54 words]
 
@@ -58,5 +57,3 @@ Use **Scotland** **Genre** **Scot** **Alice** as inputs.
 Use **Scotland** **Genre** **Scot** **Alice** as inputs.
 
 ta daa!
-
-Process finished with exit code 0
