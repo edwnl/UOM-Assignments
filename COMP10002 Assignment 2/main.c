@@ -2,10 +2,13 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <assert.h>
+#include <math.h>
 
 #define GOOD_LUCK   "GOOD LUCK CLASS!!!\n"
-#define INIT_TRACES 50
+#define DEF_TRACES 50
+#define DEF_UNIQ_EVNTS 10
 #define NEW_LINE '\n'
+#define AMT_I 1
 
 typedef unsigned int action_t;  // an action is identified by an integer
 
@@ -30,6 +33,12 @@ typedef struct {                // An array of (distinct) traces sorted lexicogr
     int      cpct;              // the capacity of this event log as the number of distinct traces it can hold
 } log_t;
 
+typedef struct {
+    action_t * arr;
+    int evnts;
+    int cpct;
+} DF_arr_t;
+
 typedef action_t** DF_t;        // a directly follows relation over actions
 
 trace_t* get_trace(int *total_events);
@@ -53,10 +62,10 @@ log_t* init_log() {
     assert(log!=NULL);
 
     // Allocate memory for the array of traces
-    log->trcs = (trace_t*) malloc(INIT_TRACES * sizeof (*trace));
+    log->trcs = (trace_t*) malloc(DEF_TRACES * sizeof (*trace));
     assert(log->trcs != NULL);
 
-    log->cpct = INIT_TRACES;
+    log->cpct = DEF_TRACES;
     log->ndtr = 0;
     return log;
 }
@@ -153,10 +162,71 @@ void insert_trace(log_t *log, trace_t *trace) {
     // If the next trace will exhaust the space in the array
     if(log->ndtr > log->cpct) {
         // re-allocate double the memory to the array.
-        log->trcs = realloc(log->trcs, log->cpct * 2 * sizeof (*trace));
+        log->trcs = realloc(log->trcs, log->cpct * 2 * sizeof (*log));
         assert(log->trcs != NULL);
     }
 }
+
+// action_n amt df_a df_b ...
+// [a, 2 , 0, 1]
+// [b, 2 , 0, 1]
+// :
+int getOrCreateIndex(DF_arr_t *data, trace_t *trace) {
+    int r;
+    // Check
+    for (r=0; r < data->evnts; r++) {
+        if (data->arr[r] == trace->head->actn) {
+            data->arr[r + AMT_I] += trace->freq;
+            return r;
+        }
+    }
+
+    // Allocate more memory to the arr if this exceeds the arr's limit.
+    if (r >= data->cpct) {
+        // Array = Capacity * Capacity * size(int) | New Arr = Array * 2
+        data->arr = realloc(data->arr, data->cpct * data->cpct * sizeof (int) * 2);
+        assert(data->arr != NULL);
+    }
+
+    // Set the first col to the action, and init the amount.
+    data->arr[r] = trace->head->actn;
+    data->arr[r + AMT_I] = 1;
+    data->evnts += 1;
+    printf("Debug: %d", r);
+    return r == 0 ? r : (int) floor(r / 4);
+}
+
+DF_arr_t * initDFArr() {
+    DF_arr_t *DF_arr;
+
+    // Allocate memory for the log itself
+    DF_arr = malloc (sizeof(*DF_arr));
+    assert(DF_arr!=NULL);
+
+    // Allocate memory for the array of traces
+    DF_arr->arr = malloc(DEF_UNIQ_EVNTS * DEF_UNIQ_EVNTS * sizeof (int));
+    assert(DF_arr->arr != NULL);
+
+    DF_arr->cpct = DEF_TRACES;
+    DF_arr->evnts = 0;
+    return DF_arr;
+}
+
+void getDFArr(log_t *log) {
+    DF_arr_t * data = initDFArr();
+
+    for (int i = 0; i < log->ndtr; ++i) {
+        event_t *event = log->trcs[i].head;
+
+        while(event != NULL) {
+            int index = getOrCreateIndex(data, &log->trcs[i]);
+            printf("Event: %c Index: %d\n", event->actn, index);
+            event = event->next;
+        }
+        printf("\n");
+    }
+}
+
 
 int main(int argc, char *argv[]) {
     log_t *log = init_log();
@@ -179,21 +249,14 @@ int main(int argc, char *argv[]) {
         if(eof == EOF) break;
     }
 
-    //    for (int i = 0; i < log->ndtr; ++i) {
-//        event_t *event = log->trcs[i].head;
-//        while(event != NULL) {
-//            printf("%c ", event->actn);
-//            event = event->next;
-//        }
-//        printf("\n");
-//    }
-
     printf("==STAGE 0============================\n");
     printf("Number of distinct events: %d\n", 0);
     printf("Number of distinct traces: %d\n", log->ndtr);
     printf("Total number of events: %d\n", amt_events);
     printf("Total number of traces: %d\n", amt_traces);
     printf("Most frequent trace frequency: %d\n", max_freq);
+
+    getDFArr(log);
 
     return EXIT_SUCCESS;
 }
