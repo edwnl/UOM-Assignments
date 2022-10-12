@@ -8,11 +8,81 @@
 #include <math.h>
 #include "utils.h"
 
-trace_t* init_list() {
-    trace_t *list = (trace_t*) malloc (sizeof(*list));
+log_t* init_log() {
+    log_t *log = malloc(sizeof *log);
+    assert(log != NULL);
+
+    // Allocate memory for the array of traces
+    log->trcs = malloc(DEF_TRACES * sizeof *log->trcs);
+    assert(log->trcs != NULL);
+
+    log->cpct = DEF_TRACES;
+    log->ndtr = 0;
+    return log;
+}
+
+void free_log(log_t *log) {
+    free(log->trcs);
+    free(log);
+}
+
+DF_t * init_DF() {
+    DF_t *df = malloc(sizeof *df); // pointer itself
+    assert(df != NULL);
+
+    df->arr = malloc(DEF_EVNTS * sizeof *df->arr); // rows
+    assert(df->arr != NULL);
+
+    for(int i = 0; i < DEF_EVNTS; i++) {
+        df->arr[i] = calloc(DEF_EVNTS, sizeof *df->arr[i]); // columns
+        assert(df->arr[i] != NULL);
+    }
+
+    df->cpct = DEF_TRACES;
+    df->evnts = 0;
+    return df;
+}
+
+void free_DF(DF_t *df) {
+    for (int i = 0; i < DEF_TRACES; i++) {
+        free(df->arr[i]); // columns
+    }
+    free(df->arr); // rows
+    free(df); // pointer itself
+}
+
+void free_trace(trace_t* trace) {
+    assert(trace!=NULL);
+    event_t *curr = trace->head, *prev;
+    while (curr) {
+        prev = curr;
+        curr = curr->next;
+        free(prev);
+    }
+    free(trace);
+}
+
+trace_t* init_trace() {
+    trace_t *list = malloc(sizeof *list);
     assert(list!=NULL);
     list->head = list->foot = NULL;
     list->freq = 1;
+    return list;
+}
+
+trace_t *append(trace_t *list, action_t value) {
+    event_t *event = malloc(sizeof *event);
+    assert(list!=NULL && event != NULL);
+
+    event->actn = value;
+    event->next = NULL;
+
+    if (list->foot==NULL) {
+        list->head = list->foot = event;
+    } else {
+        list->foot->next = event;
+        list->foot = event;
+    }
     return list;
 }
 
@@ -68,34 +138,7 @@ void sort(DF_t *df) {
     }
 }
 
-log_t* init_log() {
-    log_t *log = (log_t*) malloc (sizeof(*log));
-    assert(log!=NULL);
 
-    // Allocate memory for the array of traces
-    log->trcs = (trace_t*) malloc(DEF_TRACES * sizeof (trace_t));
-    assert(log->trcs != NULL);
-
-    log->cpct = DEF_TRACES;
-    log->ndtr = 0;
-    return log;
-}
-
-trace_t *append(trace_t *list, action_t value) {
-    event_t *event = (event_t*) malloc(sizeof(*event));
-    assert(list!=NULL && event != NULL);
-
-    event->actn = value;
-    event->next = NULL;
-
-    if (list->foot==NULL) {
-        list->head = list->foot = event;
-    } else {
-        list->foot->next = event;
-        list->foot = event;
-    }
-    return list;
-}
 
 int same_trace(event_t *a, event_t *b) {
     // If the actions are the same
@@ -141,20 +184,8 @@ void printDFArr(DF_t *df) {
 
     printf("-------------------------------------\n");
 }
-DF_t * initDFArr() {
-    DF_t *DF_arr = malloc(sizeof (DF_t));
 
-    // Allocate memory for the log itself
-    DF_arr->arr = malloc(DEF_UNIQ_EVNTS * sizeof(int *));
-    for(int i = 0; i < DEF_UNIQ_EVNTS; i++){
-        DF_arr->arr[i] = (int *) calloc(DEF_UNIQ_EVNTS, sizeof (int));
-        assert(DF_arr->arr != NULL && DF_arr->arr[i] != NULL);
-    }
 
-    DF_arr->cpct = DEF_TRACES;
-    DF_arr->evnts = 0;
-    return DF_arr;
-}
 
 
 int find_trace(log_t *log, trace_t *target_trace) {

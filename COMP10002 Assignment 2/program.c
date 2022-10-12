@@ -20,7 +20,7 @@ int getOrCreateIndex(DF_t *data, action_t actn, int freq) {
 }
 
 DF_t *getDFArr(log_t *log) {
-    DF_t *df = initDFArr();
+    DF_t *df = init_DF();
 
     // Loop through each log
     for (int i = 0; i < log->ndtr; ++i) {
@@ -46,6 +46,7 @@ int abstract_actn(DF_t *df, log_t *log, int abs) {
     int actn_a, actn_b, removed = 0;
 
     // Find the maximum weight of all the events.
+    printf("%d", df->evnts);
     for (int r = 0; r < df->evnts; r++) {
         for (int c = 0; c < df->evnts; c++) {
             double w = weight(df, r, c);
@@ -74,7 +75,7 @@ int abstract_actn(DF_t *df, log_t *log, int abs) {
         while (event != NULL) {
             // If there is at least 2 events left, and the abstract pattern is matched.
             if (event->next != NULL && event->actn == actn_a && event->next->actn == actn_b) {
-                printf("Overwriting %c, %c with %d\n", event->actn, event->next->actn, abs);
+//                printf("Overwriting %c, %c with %d\n", event->actn, event->next->actn, abs);
                 // Set the current event to the abstract pattern.
                 event->actn = abs;
                 // Skip the next event.
@@ -90,12 +91,12 @@ int abstract_actn(DF_t *df, log_t *log, int abs) {
     printLog(log);
 
     // Overwrite the previous counter with
-    free(df);
+    free_DF(df);
     // Calculate the new DF array after abstracting events.
     df = getDFArr(log);
 
     // Print the number of events removed
-    printf("Number of events removed: %d\n", removed);
+    printf("Number of events removed:a %d\n", removed);
     // Print how much of each event there is
     for (int i = 0; i < df->evnts; i++){
         printf(isAbs(df->arr[i][ACTN_COL]) ? "%d=%d\n" : "%c=%d\n",
@@ -112,7 +113,7 @@ int abstract_actn(DF_t *df, log_t *log, int abs) {
  */
 trace_t *get_trace(int *total_events) {
     // Allocate memory for the trace.
-    trace_t *trace = init_list();
+    trace_t *trace = init_trace();
     action_t action;
 
     // Loop over all chars until new line
@@ -142,10 +143,7 @@ int main(int argc, char *argv[]) {
         // If the trace is already recorded, increment the record's frequency,
         // and free the memory of the current one.
         // Otherwise, record the trace.
-        if ((curr_freq = find_trace(log, trace))) {
-            free(trace);
-            trace = NULL;
-        }
+        if ((curr_freq = find_trace(log, trace))) free_trace(trace);
         else insert_trace(log, trace);
 
         // Update max frequency and the amount of traces.
@@ -181,12 +179,16 @@ int main(int argc, char *argv[]) {
         printf("%c=%d\n", df->arr[i][0], df->arr[i][1]);
 
     printf("==STAGE 1============================\n");
+//    abstract_actn(df,log,abs++);
+    abstract_actn(df,log,abs++);
+    abstract_actn(df,log,abs++);
 
-    while(abstract_actn(df,log,abs++) != ABS_FINISHED);
-
+//    while(abstract_actn(df,log,abs++) != ABS_FINISHED);
+//
     printf("==STAGE 2============================\n");
 
-
+    free_trace(trace);
+    free_log(log);
 
     return EXIT_SUCCESS;
 }

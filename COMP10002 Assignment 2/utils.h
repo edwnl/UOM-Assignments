@@ -4,8 +4,8 @@
 #ifndef COMP10002_ASSIGNMENT_2_UTILS_H
 #define COMP10002_ASSIGNMENT_2_UTILS_H
 
-#define DEF_TRACES 50
-#define DEF_UNIQ_EVNTS 10
+#define DEF_TRACES 20
+#define DEF_EVNTS 10
 #define NEW_LINE '\n'
 #define ACTN_COL 0
 #define AMT_COL 1
@@ -42,19 +42,23 @@ typedef struct {
 } DF_t; // a directly follows relation over actions
 
 void printDFArr(DF_t *df);
-trace_t* init_list();
 void swap(DF_t *df, int a, int b);
 void print(trace_t *a);
-int smallerTrace(trace_t *a, trace_t *b);
 void sort(DF_t *df);
-log_t* init_log();
 int isAbs(int val);
 void printLog(log_t *log);
-trace_t *append(trace_t *list, action_t value);
 int same_trace(event_t *a, event_t *b);
-DF_t * initDFArr();
 int find_trace(log_t *log, trace_t *target_trace);
 void insert_trace(log_t *log, trace_t *trace);
 double weight(DF_t *df, int r, int c);
+
+// Data Structures
+trace_t* init_trace();
+trace_t *append(trace_t *list, action_t value);
+log_t* init_log();
+DF_t * init_DF();
+void free_trace(trace_t* trace);
+void free_log(log_t *log);
+void free_DF(DF_t *df);
 
 #endif //COMP10002_ASSIGNMENT_2_UTILS_H
