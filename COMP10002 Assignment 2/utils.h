@@ -9,9 +9,10 @@
 #define NEW_LINE '\n'
 #define ACTN_COL 0
 #define AMT_COL 1
-#define DF_START_COL 2
+#define DF_COL 2
+#define ABS_FINISHED -1
 
-typedef unsigned int action_t;  // an action is identified by an integer
+typedef int action_t;  // an action is identified by an integer
 
 // Event (a)
 typedef struct event event_t;   // Forward Declaration
@@ -35,22 +36,23 @@ typedef struct {                // An array of (distinct) traces sorted lexicogr
 } log_t;
 
 typedef struct {
-    action_t ** arr;
+    int ** arr;
     int evnts;
     int cpct;
 } DF_t; // a directly follows relation over actions
 
 void printDFArr(DF_t *DF_arr);
 trace_t* init_list();
-void swap(trace_t *a, trace_t *b);
+void swap(DF_t *df, int a, int b);
 void print(trace_t *a);
 int smallerTrace(trace_t *a, trace_t *b);
-void sort(log_t *log);
+void sort(DF_t *df);
 log_t* init_log();
 trace_t *insert_at_foot(trace_t *list, action_t value);
 int same_trace(event_t *a, event_t *b);
 DF_t * initDFArr();
 int find_trace(log_t *log, trace_t *target_trace);
 void insert_trace(log_t *log, trace_t *trace);
+double weight(DF_t *df, int r, int c);
 
 #endif //COMP10002_ASSIGNMENT_2_UTILS_H

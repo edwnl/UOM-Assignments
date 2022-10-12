@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <math.h>
 #include "utils.h"
 
 trace_t* init_list() {
@@ -16,46 +17,57 @@ trace_t* init_list() {
     return list;
 }
 
-void swap(trace_t *a, trace_t *b) {
-    trace_t temp = *a;
-    *a = *b;
-    *b = temp;
-}
-
 void print(trace_t *a) {
     event_t *evnt = a->head;
     while (evnt != NULL) {
-        printf("%c, ", evnt->actn);
+        printf(evnt->actn > 255 ? "%d, " : "%c, ", evnt->actn);
         evnt = evnt->next;
     }
 }
 
-int smallerTrace(trace_t *a, trace_t *b) {
-    event_t *evnt_a = a->head, *evnt_b = b->head;
-    // If the actions are the same
-    while (evnt_a->actn == evnt_b->actn) {
-        // Check the next node
-        evnt_a = evnt_a->next; evnt_b = evnt_b->next;
-        // If the end of the list is reached, the lists are identical.
-        if(evnt_a == NULL && evnt_b == NULL) return 0;
+void printdf(DF_t *df) {
+    for (int r = 0; r < df->evnts; ++r) {
+        for (int c = 0; c < df->evnts + DF_COL; ++c) {
+            if(c == ACTN_COL && df->arr[r][c] < 255) {
+                printf("[Row %d] %5c", r, df->arr[r][c]);
+            } else if (c == AMT_COL) {
+                printf("%5d events", df->arr[r][c]);
+            } else {
+                printf("%5d", df->arr[r][c]);
+            }
+        }
+        printf("\n");
     }
-
-    return evnt_a->actn < evnt_b->actn;
 }
 
-void sort(log_t *log) {
-    int i, j, min;
+
+void swap(DF_t *df, int a, int b) {
+    int *r_tmp, c_tmp;
+
+    r_tmp = df->arr[a];
+    df->arr[a] = df->arr[b];
+    df->arr[b] = r_tmp;
+
+    a+= DF_COL; b += DF_COL;
+
+    for (int row = 0; row < df->evnts; row++) {
+        c_tmp = df->arr[row][a];
+        df->arr[row][a] = df->arr[row][b];
+        df->arr[row][b] = c_tmp;
+    }
+}
+
+void sort(DF_t *df) {
+    int min, *temp, tmp;
     // One by one move boundary of unsorted subarray
-    for (i = 0; i < log->ndtr - 1; i++) {
+    for (int i = 0; i < df->evnts - 1; i++) {
         // Find the minimum element in unsorted array
         min = i;
-        for (j = i + 1; j < log->ndtr; j++)
-            if (smallerTrace(&log->trcs[j], &log->trcs[min]))
-                min = j;
+        for (int j = i + 1; j < df->evnts; j++) {
+            if(df->arr[j][ACTN_COL] < df->arr[min][ACTN_COL]) min = j;
+        }
 
-        // Swap the found minimum element
-        // with the first element
-        swap(&log->trcs[min], &log->trcs[i]);
+        if(min != i) swap(df, min, i);
     }
 }
 
@@ -102,29 +114,31 @@ int same_trace(event_t *a, event_t *b) {
 }
 
 void printDFArr(DF_t *DF_arr) {
-    printf("   ");
+    printf("     ");
     for (int i = 0; i < DF_arr->evnts; ++i) {
-        printf("%c  ", DF_arr->arr[i][ACTN_COL]);
+        int value = DF_arr->arr[i][ACTN_COL];
+        printf(value > 255 ? "%5d" :"%5c", DF_arr->arr[i][ACTN_COL]);
     }
     printf("\n");
 
     for (int i = 0; i < DF_arr->evnts; ++i) {
-        printf("%c  ", DF_arr->arr[i][ACTN_COL]);
+        int value = DF_arr->arr[i][ACTN_COL];
+        printf(value > 255 ? "%5d" :"%5c", DF_arr->arr[i][ACTN_COL]);
         for (int j = 0; j < DF_arr->evnts; ++j) {
-            printf("%u  ", DF_arr->arr[i][j + DF_START_COL]);
+            printf("%5u", DF_arr->arr[i][j + DF_COL]);
         }
         printf("\n");
     }
 
-    printf("-------------------------------------");
+    printf("-------------------------------------\n");
 }
 DF_t * initDFArr() {
     DF_t *DF_arr = malloc(sizeof (DF_t));
 
     // Allocate memory for the log itself
-    DF_arr->arr = malloc(DEF_UNIQ_EVNTS * sizeof(action_t *));
+    DF_arr->arr = malloc(DEF_UNIQ_EVNTS * sizeof(int *));
     for(int i = 0; i < DEF_UNIQ_EVNTS; i++){
-        DF_arr->arr[i] = (action_t *) calloc(DEF_UNIQ_EVNTS, sizeof (action_t));
+        DF_arr->arr[i] = (int *) calloc(DEF_UNIQ_EVNTS, sizeof (int));
         assert(DF_arr->arr != NULL && DF_arr->arr[i] != NULL);
     }
 
@@ -154,4 +168,22 @@ void insert_trace(log_t *log, trace_t *trace) {
         log->trcs = realloc(log->trcs, log->cpct * 2 * sizeof (*log));
         assert(log->trcs != NULL);
     }
+}
+
+int max(int a, int b) {return (a > b ? a : b);}
+
+int sup(DF_t *df, int r_indx, int c_indx) {
+    return (int) df->arr[r_indx][c_indx + DF_COL];
+}
+
+double pd(DF_t *df, int x, int y) {
+    return (100 * abs(sup(df,x,y) - sup(df, y, x)) / max(sup(df, x, y), sup(df, y, x)));
+}
+
+double weight(DF_t *df, int r, int c) {
+    if(r == c) return -1;
+    if(sup(df, r, c) <= sup(df, c, r)) return -1;
+    if(pd(df, r, c) <= 70) return -1;
+
+    return fabs(50 - pd(df, r, c)) * max(sup(df, r, c), sup(df, c, r));
 }
