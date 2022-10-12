@@ -41,14 +41,16 @@ typedef struct {
     int cpct;
 } DF_t; // a directly follows relation over actions
 
-void printDFArr(DF_t *DF_arr);
+void printDFArr(DF_t *df);
 trace_t* init_list();
 void swap(DF_t *df, int a, int b);
 void print(trace_t *a);
 int smallerTrace(trace_t *a, trace_t *b);
 void sort(DF_t *df);
 log_t* init_log();
-trace_t *insert_at_foot(trace_t *list, action_t value);
+int isAbs(int val);
+void printLog(log_t *log);
+trace_t *append(trace_t *list, action_t value);
 int same_trace(event_t *a, event_t *b);
 DF_t * initDFArr();
 int find_trace(log_t *log, trace_t *target_trace);

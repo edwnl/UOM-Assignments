@@ -9,8 +9,7 @@
 #include "utils.h"
 
 trace_t* init_list() {
-    trace_t *list;
-    list = (trace_t*) malloc (sizeof(*list));
+    trace_t *list = (trace_t*) malloc (sizeof(*list));
     assert(list!=NULL);
     list->head = list->foot = NULL;
     list->freq = 1;
@@ -20,9 +19,11 @@ trace_t* init_list() {
 void print(trace_t *a) {
     event_t *evnt = a->head;
     while (evnt != NULL) {
-        printf(evnt->actn > 255 ? "%d, " : "%c, ", evnt->actn);
+        printf(isAbs(evnt->actn) ? "%d" : "%c", evnt->actn);
         evnt = evnt->next;
+        if(evnt != NULL) printf(", ");
     }
+    printf("\n");
 }
 
 void printdf(DF_t *df) {
@@ -58,24 +59,17 @@ void swap(DF_t *df, int a, int b) {
 }
 
 void sort(DF_t *df) {
-    int min, *temp, tmp;
-    // One by one move boundary of unsorted subarray
     for (int i = 0; i < df->evnts - 1; i++) {
-        // Find the minimum element in unsorted array
-        min = i;
+        int min = i;
         for (int j = i + 1; j < df->evnts; j++) {
             if(df->arr[j][ACTN_COL] < df->arr[min][ACTN_COL]) min = j;
         }
-
         if(min != i) swap(df, min, i);
     }
 }
 
 log_t* init_log() {
-    log_t *log;
-
-    // Allocate memory for the log itself
-    log = (log_t*) malloc (sizeof(*log));
+    log_t *log = (log_t*) malloc (sizeof(*log));
     assert(log!=NULL);
 
     // Allocate memory for the array of traces
@@ -87,12 +81,13 @@ log_t* init_log() {
     return log;
 }
 
-trace_t *insert_at_foot(trace_t *list, action_t value) {
-    event_t *event;
-    event = (event_t*) malloc(sizeof(*event));
+trace_t *append(trace_t *list, action_t value) {
+    event_t *event = (event_t*) malloc(sizeof(*event));
     assert(list!=NULL && event != NULL);
+
     event->actn = value;
     event->next = NULL;
+
     if (list->foot==NULL) {
         list->head = list->foot = event;
     } else {
@@ -107,25 +102,39 @@ int same_trace(event_t *a, event_t *b) {
     while(a->actn == b->actn) {
         // Check the next node
         a = a->next; b = b->next;
+
+        // Different length traces
+        if((a == NULL && b != NULL) || (b == NULL && a != NULL)) return 0;
         // If the end of the list is reached, the list is identical.
         if(a == NULL && b == NULL) return 1;
     }
     return 0;
 }
 
-void printDFArr(DF_t *DF_arr) {
+void printLog(log_t *log) {
+    printf("Traces Count: %d, Capacity: %d\n", log->ndtr, log->cpct);
+    for (int i = 0; i < log->ndtr; ++i) {
+        print(&log->trcs[i]);
+    }
+}
+
+int isAbs(int val) {
+    return val > 255;
+}
+
+void printDFArr(DF_t *df) {
     printf("     ");
-    for (int i = 0; i < DF_arr->evnts; ++i) {
-        int value = DF_arr->arr[i][ACTN_COL];
-        printf(value > 255 ? "%5d" :"%5c", DF_arr->arr[i][ACTN_COL]);
+    for (int i = 0; i < df->evnts; ++i) {
+        int value = df->arr[i][ACTN_COL];
+        printf(value > 255 ? "%5d" :"%5c", df->arr[i][ACTN_COL]);
     }
     printf("\n");
 
-    for (int i = 0; i < DF_arr->evnts; ++i) {
-        int value = DF_arr->arr[i][ACTN_COL];
-        printf(value > 255 ? "%5d" :"%5c", DF_arr->arr[i][ACTN_COL]);
-        for (int j = 0; j < DF_arr->evnts; ++j) {
-            printf("%5u", DF_arr->arr[i][j + DF_COL]);
+    for (int i = 0; i < df->evnts; ++i) {
+        int value = df->arr[i][ACTN_COL];
+        printf(value > 255 ? "%5d" :"%5c", df->arr[i][ACTN_COL]);
+        for (int j = 0; j < df->evnts; ++j) {
+            printf("%5u", df->arr[i][j + DF_COL]);
         }
         printf("\n");
     }
@@ -181,9 +190,10 @@ double pd(DF_t *df, int x, int y) {
 }
 
 double weight(DF_t *df, int r, int c) {
-    if(r == c) return -1;
-    if(sup(df, r, c) <= sup(df, c, r)) return -1;
-    if(pd(df, r, c) <= 70) return -1;
+    if (r == c) return -1;
+    if (sup(df, r, c) <= sup(df, c, r)) return -1;
+    if (pd(df, r, c) <= 70) return -1;
+    if (df->arr[r][ACTN_COL] > 255 || df->arr[c][ACTN_COL] > 255) return -1;
 
     return fabs(50 - pd(df, r, c)) * max(sup(df, r, c), sup(df, c, r));
 }
