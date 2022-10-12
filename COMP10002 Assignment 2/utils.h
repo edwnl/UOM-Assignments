@@ -4,7 +4,6 @@
 #ifndef COMP10002_ASSIGNMENT_2_UTILS_H
 #define COMP10002_ASSIGNMENT_2_UTILS_H
 
-#define GOOD_LUCK   "GOOD LUCK CLASS!!!\n"
 #define DEF_TRACES 50
 #define DEF_UNIQ_EVNTS 10
 #define NEW_LINE '\n'
@@ -39,11 +38,9 @@ typedef struct {
     action_t ** arr;
     int evnts;
     int cpct;
-} DF_arr_t;
+} DF_t; // a directly follows relation over actions
 
-typedef action_t** DF_t;        // a directly follows relation over actions
-
-void printDFArr(DF_arr_t *DF_arr);
+void printDFArr(DF_t *DF_arr);
 trace_t* init_list();
 void swap(trace_t *a, trace_t *b);
 void print(trace_t *a);
@@ -52,7 +49,7 @@ void sort(log_t *log);
 log_t* init_log();
 trace_t *insert_at_foot(trace_t *list, action_t value);
 int same_trace(event_t *a, event_t *b);
-DF_arr_t * initDFArr();
+DF_t * initDFArr();
 int find_trace(log_t *log, trace_t *target_trace);
 void insert_trace(log_t *log, trace_t *trace);
 

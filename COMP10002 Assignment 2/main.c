@@ -3,7 +3,7 @@
 #include <ctype.h>
 #include "utils.h"
 
-int getOrCreateIndex(DF_arr_t *data, action_t actn, int freq) {
+int getOrCreateIndex(DF_t *data, action_t actn, int freq) {
     int r;
     action_t **arr = data->arr;
     for (r=0; r < data->evnts; r++) {
@@ -21,8 +21,8 @@ int getOrCreateIndex(DF_arr_t *data, action_t actn, int freq) {
     return r;
 }
 
-DF_arr_t * getDFArr(log_t *log) {
-    DF_arr_t * data = initDFArr();
+DF_t * getDFArr(log_t *log) {
+    DF_t * data = initDFArr();
     sort(log);
 
     // Loop through each log
@@ -91,7 +91,7 @@ int main(int argc, char *argv[]) {
         if(eof == EOF) break;
     }
 
-    DF_arr_t * df_arr = getDFArr(log);
+    DF_t * df_arr = getDFArr(log);
 
     printf("==STAGE 0============================\n");
     printf("Number of distinct events: %d\n", df_arr->evnts);

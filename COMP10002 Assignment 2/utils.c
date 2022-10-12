@@ -101,7 +101,7 @@ int same_trace(event_t *a, event_t *b) {
     return 0;
 }
 
-void printDFArr(DF_arr_t *DF_arr) {
+void printDFArr(DF_t *DF_arr) {
     printf("   ");
     for (int i = 0; i < DF_arr->evnts; ++i) {
         printf("%c  ", DF_arr->arr[i][ACTN_COL]);
@@ -118,8 +118,8 @@ void printDFArr(DF_arr_t *DF_arr) {
 
     printf("-------------------------------------");
 }
-DF_arr_t * initDFArr() {
-    DF_arr_t *DF_arr = malloc(sizeof (DF_arr_t));
+DF_t * initDFArr() {
+    DF_t *DF_arr = malloc(sizeof (DF_t));
 
     // Allocate memory for the log itself
     DF_arr->arr = malloc(DEF_UNIQ_EVNTS * sizeof(action_t *));
