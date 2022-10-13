@@ -22,6 +22,7 @@ log_t* init_log() {
 }
 
 void free_log(log_t *log) {
+//    for (int i = 0; i < log->cpct; ++i) free_trace(&log->trcs[i]);
     free(log->trcs);
     free(log);
 }
@@ -33,7 +34,7 @@ DF_t * init_DF() {
     df->arr = malloc(DEF_EVNTS * sizeof *df->arr); // rows
     assert(df->arr != NULL);
 
-    for(int i = 0; i < DEF_EVNTS; i++) {
+    for (int i = 0; i < DEF_EVNTS; i++) {
         df->arr[i] = calloc(DEF_EVNTS, sizeof *df->arr[i]); // columns
         assert(df->arr[i] != NULL);
     }
@@ -44,15 +45,15 @@ DF_t * init_DF() {
 }
 
 void free_DF(DF_t *df) {
-    for (int i = 0; i < DEF_TRACES; i++) {
-        free(df->arr[i]); // columns
+    for (int i = 0; i < df->cpct; i++) {
+        free(df->arr[i]);  // free the columns
     }
-    free(df->arr); // rows
-    free(df); // pointer itself
+    free(df->arr);  // free the rows
+    free(df);       // free the pointer
 }
 
 void free_trace(trace_t* trace) {
-    assert(trace!=NULL);
+    if (trace == NULL) return;
     event_t *curr = trace->head, *prev;
     while (curr) {
         prev = curr;
@@ -62,21 +63,24 @@ void free_trace(trace_t* trace) {
     free(trace);
 }
 
-trace_t* init_trace() {
+trace_t * init_trace() {
     trace_t *list = malloc(sizeof *list);
     assert(list!=NULL);
+
     list->head = list->foot = NULL;
     list->freq = 1;
     return list;
 }
 
-trace_t *append(trace_t *list, action_t value) {
-    event_t *event = malloc(sizeof *event);
+trace_t * append(trace_t *list, action_t value) {
+    event_t *event = malloc(sizeof *event); // malloc for the event
     assert(list!=NULL && event != NULL);
 
+    // Build the event
     event->actn = value;
     event->next = NULL;
 
+    // Insert the event
     if (list->foot==NULL) {
         list->head = list->foot = event;
     } else {
@@ -111,8 +115,7 @@ void printdf(DF_t *df) {
     }
 }
 
-
-void swap(DF_t *df, int a, int b) {
+DF_t * swap(DF_t *df, int a, int b) {
     int *r_tmp, c_tmp;
 
     r_tmp = df->arr[a];
@@ -126,18 +129,20 @@ void swap(DF_t *df, int a, int b) {
         df->arr[row][a] = df->arr[row][b];
         df->arr[row][b] = c_tmp;
     }
+
+    return df;
 }
 
-void sort(DF_t *df) {
+DF_t * sort(DF_t *df) {
     for (int i = 0; i < df->evnts - 1; i++) {
         int min = i;
         for (int j = i + 1; j < df->evnts; j++) {
             if(df->arr[j][ACTN_COL] < df->arr[min][ACTN_COL]) min = j;
         }
-        if(min != i) swap(df, min, i);
+        if(min != i) df = swap(df, min, i);
     }
+    return df;
 }
-
 
 
 int same_trace(event_t *a, event_t *b) {
@@ -145,7 +150,6 @@ int same_trace(event_t *a, event_t *b) {
     while(a->actn == b->actn) {
         // Check the next node
         a = a->next; b = b->next;
-
         // Different length traces
         if((a == NULL && b != NULL) || (b == NULL && a != NULL)) return 0;
         // If the end of the list is reached, the list is identical.
@@ -166,27 +170,24 @@ int isAbs(int val) {
 }
 
 void printDFArr(DF_t *df) {
-    printf("     ");
+    int value;
+    printf("%5s", " ");
     for (int i = 0; i < df->evnts; ++i) {
-        int value = df->arr[i][ACTN_COL];
-        printf(value > 255 ? "%5d" :"%5c", df->arr[i][ACTN_COL]);
+        value = df->arr[i][ACTN_COL];
+        printf(isAbs(value) ? "%5d" :"%5c", value);
     }
     printf("\n");
 
     for (int i = 0; i < df->evnts; ++i) {
-        int value = df->arr[i][ACTN_COL];
-        printf(value > 255 ? "%5d" :"%5c", df->arr[i][ACTN_COL]);
+        value = df->arr[i][ACTN_COL];
+        printf(isAbs(value) ? "%5d" :"%5c", value);
         for (int j = 0; j < df->evnts; ++j) {
             printf("%5u", df->arr[i][j + DF_COL]);
         }
         printf("\n");
     }
-
     printf("-------------------------------------\n");
 }
-
-
-
 
 int find_trace(log_t *log, trace_t *target_trace) {
     for (int i = 0; i < log->ndtr; i++) {
@@ -197,7 +198,7 @@ int find_trace(log_t *log, trace_t *target_trace) {
     return 0;
 }
 
-void insert_trace(log_t *log, trace_t *trace) {
+log_t * insert_trace(log_t *log, trace_t *trace) {
     // Set frequency to one, since it's a new trace.
     trace->freq = 1;
     // Insert the trace into the array
@@ -208,6 +209,7 @@ void insert_trace(log_t *log, trace_t *trace) {
         log->trcs = realloc(log->trcs, log->cpct * 2 * sizeof (*log));
         assert(log->trcs != NULL);
     }
+    return log;
 }
 
 int max(int a, int b) {return (a > b ? a : b);}
@@ -217,14 +219,37 @@ int sup(DF_t *df, int r_indx, int c_indx) {
 }
 
 double pd(DF_t *df, int x, int y) {
-    return (100 * abs(sup(df,x,y) - sup(df, y, x)) / max(sup(df, x, y), sup(df, y, x)));
+    return 100 * abs(sup(df,x,y) - sup(df, y, x)) / max(sup(df, x, y), sup(df, y, x));
 }
 
-double weight(DF_t *df, int r, int c) {
-    if (r == c) return -1;
-    if (sup(df, r, c) <= sup(df, c, r)) return -1;
-    if (pd(df, r, c) <= 70) return -1;
-    if (df->arr[r][ACTN_COL] > 255 || df->arr[c][ACTN_COL] > 255) return -1;
+int actn(DF_t *df, int x) {
+    return df->arr[x][ACTN_COL];
+}
 
-    return fabs(50 - pd(df, r, c)) * max(sup(df, r, c), sup(df, c, r));
+int find_pattern(DF_t *df, double *weight, int r, int c, int stg2, int n_evnts) {
+    int sup_rc = sup(df, r, c), sup_cr = sup(df, c, r);
+    int patn = NONE;
+    *weight = 0;
+
+    // No pattern between equal events
+    if (r == c) return patn;
+    if(sup_cr == 0 && sup_rc == 0) return patn;
+    // Stage 1 only identifies non-abstract patterns
+    if ((isAbs(actn(df, r)) || isAbs(actn(df, c)) && !stg2)) return patn;
+
+    double pd_rc = pd(df, r, c);
+
+    // SEQ: sup(r, c) > sup(c, r) && pd(r, c) > 70
+    if(sup_rc > sup_cr && pd_rc > 70) patn = SEQ;
+
+    if(stg2) {
+        // CON: sup(c, r) > 0 && sup(r, c) > 0 && pd(r, c) < 30
+        if (pd_rc < 30) patn = CON;
+        // CHC: max(sup(r, c), sup(c, r)) <= N / 100 (PIRORITY)
+        if (max(sup_rc , sup_cr) <= (n_evnts / 100)) patn = CHC;
+    }
+
+    *weight = fabs(50 - pd(df, r, c)) * max(sup_rc, sup_cr);
+
+    return patn;
 }

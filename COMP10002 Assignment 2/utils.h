@@ -4,13 +4,20 @@
 #ifndef COMP10002_ASSIGNMENT_2_UTILS_H
 #define COMP10002_ASSIGNMENT_2_UTILS_H
 
-#define DEF_TRACES 20
-#define DEF_EVNTS 10
+#define DEF_TRACES 50
+#define DEF_EVNTS 50
 #define NEW_LINE '\n'
+
 #define ACTN_COL 0
 #define AMT_COL 1
 #define DF_COL 2
-#define ABS_FINISHED -1
+
+#define NONE (-1)
+
+#define SEQ 1
+#define CON 2
+#define CHC 3
+
 
 typedef int action_t;  // an action is identified by an integer
 
@@ -42,15 +49,17 @@ typedef struct {
 } DF_t; // a directly follows relation over actions
 
 void printDFArr(DF_t *df);
-void swap(DF_t *df, int a, int b);
+DF_t * swap(DF_t *df, int a, int b);
 void print(trace_t *a);
-void sort(DF_t *df);
+DF_t * sort(DF_t *df);
 int isAbs(int val);
 void printLog(log_t *log);
 int same_trace(event_t *a, event_t *b);
 int find_trace(log_t *log, trace_t *target_trace);
-void insert_trace(log_t *log, trace_t *trace);
-double weight(DF_t *df, int r, int c);
+log_t * insert_trace(log_t *log, trace_t *trace);
+int actn(DF_t *df, int x);
+int find_pattern(DF_t *df, double *weight, int r, int c, int stg2, int n_evnts);
+
 
 // Data Structures
 trace_t* init_trace();
