@@ -37,7 +37,7 @@ DF_t *getDFArr(log_t *log) {
         }
     }
 
-    sort(df);
+    sort_df(df);
     return df;
 }
 
@@ -47,21 +47,24 @@ char * get_patn(int patn) {
         NAME(SEQ)
         NAME(CON)
         NAME(CHC)
-        default: return "UNKNOWN";
+        default: return "NONE";
     }
 #undef NAME
 }
 
-int abstract_actn(DF_t **df_ptr, log_t *log, int *abs, int stg2, int n_evnts) {
+int abstract_df(DF_t **df_ptr, log_t *log, int *abs, int stg, int n_evnts) {
+//    printf("Abstract DF. ABS: %d, STG: %d\n", *abs, stg);
     DF_t *df = *(df_ptr);
     double max_weight = 0, weight = 0;
     int actn_a = 0, actn_b = 0, removed = 0, max_patn = NONE, patn;
+    int FIRST_STG1 = *abs == 256, FIRST_STG2 = stg == 1;
 
     // Find the maximum weight of all the events.
     for (int r = 0; r < df->evnts; r++) {
         for (int c = 0; c < df->evnts; c++) {
-            patn = find_pattern(df, &weight, r, c, stg2, n_evnts);
-            if (weight > max_weight) {
+            patn = find_pattern(df, &weight, r, c, stg, n_evnts);
+//            printf("[%d, %d] Pattern: %s Weight: %.0lf\n", actn(df, r), actn(df, c), get_patn(patn), weight);
+            if (weight > max_weight && patn != NONE) {
                 max_weight = weight;
                 max_patn = patn;
                 actn_a = df->arr[r][ACTN_COL];
@@ -69,17 +72,27 @@ int abstract_actn(DF_t **df_ptr, log_t *log, int *abs, int stg2, int n_evnts) {
             }
         }
     }
+//    printf("Pattern: %s Weight: %.0lf\n", get_patn(max_patn), max_weight);
 
     // Terminate if there is no more patterns.
     if (max_patn == NONE) return NONE;
 
+    if (FIRST_STG1) printf("==STAGE 1============================\n");
+    else if (FIRST_STG2) printf("==STAGE 2============================\n");
+    else printf("=====================================\n");
+
     // Print the array, and the maximum weight.
     printDFArr(df);
-    printf("%d = %s(%c, %c)\n", *abs, get_patn(max_patn), actn_a, actn_b);
+    printf("%d = %s(", *abs, get_patn(max_patn));
+    print_actn(actn_a);
+    printf(",");
+    print_actn(actn_b);
+    printf(")\n");
+
     // Abstract 2 events into one, by replaceing with an abstract actn.
     for (int i = 0; i < log->ndtr; ++i) {
-        printf("Trace before: ");
-        print(&log->trcs[i]);
+        if(DEBUG) printf("Trace amt: %d\n", log->trcs[i].freq);
+        if(DEBUG) print_trace(&log->trcs[i]);
         // Start from the event in a trace.
         event_t *event = log->trcs[i].head;
         // If there is an event
@@ -88,23 +101,26 @@ int abstract_actn(DF_t **df_ptr, log_t *log, int *abs, int stg2, int n_evnts) {
             if (event->actn == actn_a || event->actn == actn_b) {
                 // Set the current event to the abstract pattern.
                 event->actn = *abs;
-                // If the next event is , overwrite it.
-                if(event->next != NULL && event->next->actn == actn_b) {
-                    // Skip the next event.
-                    event->next = event->next->next;
-                    // Increase the removed counter.
+
+                // If the next event is, overwrite it.
+                event_t *next = event->next;
+                while(next != NULL && (next->actn == actn_b || next->actn == actn_a)) {
+                    next = next->next;
                     removed += log->trcs[i].freq;
                 }
+                event->next = next;
             }
             // Iterate the next event
             event = event->next;
         }
-        printf("Trace after: ");
-        print(&log->trcs[i]);
+        if(DEBUG) print_trace(&log->trcs[i]);
+        if(DEBUG) printf("\n");
     }
 
     df->evnts -= 1;
     *abs += 1;
+
+    if (DEBUG) printLog(log);
 
     // Overwrite the previous counter with
     free_DF(*df_ptr);
@@ -113,13 +129,9 @@ int abstract_actn(DF_t **df_ptr, log_t *log, int *abs, int stg2, int n_evnts) {
 
     // Print the number of events removed
     printf("Number of events removed: %d\n", removed);
+
     // Print how much of each event there is
-    for (int i = 0; i < df->evnts; i++){
-        printf(isAbs(df->arr[i][ACTN_COL]) ? "%d=%d\n" : "%c=%d\n",
-               df->arr[i][ACTN_COL], df->arr[i][AMT_COL]);
-    }
-    printf("=====================================\n");
-    printDFArr(df);
+    print_evnt_amt(*df_ptr);
     return 1;
 }
 
@@ -150,7 +162,7 @@ trace_t *get_trace(int *total_events) {
 int main(int argc, char *argv[]) {
     log_t *log = init_log();
     trace_t *trace;
-    int n_traces = 0, max_freq = 0, n_events = 0, curr_freq, eof, abs = 256;
+    int n_traces = 0, max_freq = 0, n_events = 0, curr_freq, eof, abs = 256, stg = 0;
 
     // Obtain a new trace from stdin, and update 'eof' to its frequency.
     while ((eof = (trace = get_trace(&n_events))->freq)) {
@@ -180,35 +192,23 @@ int main(int argc, char *argv[]) {
     printf("Total number of traces: %d\n", n_traces);
     printf("Most frequent trace frequency: %d\n", max_freq);
 
-    // Print most frequent traces
-    for (int i = 0; i < log->ndtr; ++i) {
-        if (log->trcs[i].freq == max_freq) {
-            event_t *event = log->trcs[i].head;
-            while (event != NULL) {
-                printf("%c", event->actn);
-                event = event->next;
-            }
-            printf("\n");
-        }
+    sort_log(log);
+    // Print most frequent tracess
+    for (int i = 0; i < log->ndtr; i++) {
+        if (log->trcs[i].freq == max_freq) print_trace(&log->trcs[i]);
     }
+
     // Print amount of each
-    for (int i = 0; i < df->evnts; i++)
-        printf("%c=%d\n", df->arr[i][0], df->arr[i][1]);
+    print_evnt_amt(df);
 
-    printf("==STAGE 1============================\n");
+    while(abstract_df(&df, log, &abs, stg, n_events) != NONE);
+    while(abstract_df(&df, log, &abs, ++stg, n_events) != NONE);
 
-    while(abstract_actn(&df, log, &abs, 0, n_events) != NONE);
-
-    printf("==STAGE 2============================\n");
-
-    while(abstract_actn(&df, log, &abs, 1, n_events) != NONE);
-
-    printf("==THE END============================");
+    printf("==THE END============================\n");
 
     free_trace(trace);
     trace = NULL;
-
     free_log(log);
-
+    free_DF(df);
     return EXIT_SUCCESS;
 }

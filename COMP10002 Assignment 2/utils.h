@@ -4,6 +4,8 @@
 #ifndef COMP10002_ASSIGNMENT_2_UTILS_H
 #define COMP10002_ASSIGNMENT_2_UTILS_H
 
+#define DEBUG 0
+
 #define DEF_TRACES 50
 #define DEF_EVNTS 50
 #define NEW_LINE '\n'
@@ -50,8 +52,8 @@ typedef struct {
 
 void printDFArr(DF_t *df);
 DF_t * swap(DF_t *df, int a, int b);
-void print(trace_t *a);
-DF_t * sort(DF_t *df);
+void print_trace(trace_t *a);
+DF_t * sort_df(DF_t *df);
 int isAbs(int val);
 void printLog(log_t *log);
 int same_trace(event_t *a, event_t *b);
@@ -59,7 +61,10 @@ int find_trace(log_t *log, trace_t *target_trace);
 log_t * insert_trace(log_t *log, trace_t *trace);
 int actn(DF_t *df, int x);
 int find_pattern(DF_t *df, double *weight, int r, int c, int stg2, int n_evnts);
-
+void print_actn(int actn);
+void print_evnt_amt(DF_t *df);
+void swap_trace(trace_t *a, trace_t *b);
+void sort_log(log_t *log);
 
 // Data Structures
 trace_t* init_trace();
